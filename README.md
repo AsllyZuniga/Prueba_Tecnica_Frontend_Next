@@ -1,6 +1,6 @@
-# TestNext · Sistema de Inventario
+# TestNext 
 
-> Implementación técnica de componentes Next.js 14 + TypeScript para gestión de inventario de productos.
+> Implementación técnica de componentes Next.js + TypeScript para gestión de inventario de productos.
 
 ![Next.js](https://img.shields.io/badge/Next.js-black?style=flat-square&logo=next.js&logoColor=white)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.9.2-3178C6?style=flat-square&logo=typescript&logoColor=white)
@@ -18,7 +18,6 @@
 | 🔒 TypeScript Strict | `"strict": true` — sin `any` implícitos ni accesos null sin verificar |
 | ⚡ App Router | Arquitectura moderna de Next.js 14 |
 | 🖥️ Server Components | Optimizados para rendimiento |
-| 🔌 API Routes | Endpoints REST integrados |
 | 📱 Responsive | Mobile-first, todos los dispositivos |
 | 🌑 Tema Oscuro | Interfaz moderna y profesional |
 | ✅ Validación | Formularios con validación integrada y cumplimiento WCAG 2.1 AA |
@@ -28,8 +27,7 @@
 ## 🛠️ Stack Tecnológico
 
 ```
-Next.js 14      →  Framework React con App Router
-React 18        →  Última versión estable
+Next.js       →  Framework React con App Router
 TypeScript      →  Tipado estático estricto (strict mode)
 Tailwind CSS    →  Estilización utility-first con tokens centralizados
 lucide-react    →  Iconografía moderna y consistente
@@ -58,15 +56,10 @@ Abre [http://localhost:3000](http://localhost:3000) en tu navegador.
 
 ```
 testnext/
-├── app/                        # App Router — enrutamiento y metadata
+├── app/                        # App 
 │   ├── layout.tsx
 │   ├── page.tsx
-│   ├── globals.css
-│   └── api/
-│       └── products/
-│           ├── route.ts        # GET, POST
-│           └── [id]/
-│               └── route.ts   # GET, PUT, DELETE
+│   
 │
 ├── src/
 │   ├── components/             # Renderizado visual (importa de types/ y utils/)
