@@ -2,7 +2,7 @@
 
 import React, { useMemo, useRef, useState } from 'react'
 import Image from 'next/image'
-import { ChevronDown, Plus, Upload, Video, X } from 'lucide-react'
+import { Camera, ChevronDown, Plus, Upload, Video, X } from 'lucide-react'
 import { Badge, Button, Card } from '@/src/components/common'
 
 type WorkOrderStatus = 'En progreso' | 'Pendiente' | 'Completada'
@@ -23,12 +23,12 @@ const ASSIGNEE_OPTIONS = [
 
 const Section: React.FC<{ title: string; children: React.ReactNode }> = ({ title, children }) => {
   return (
-    <Card className="p-0 overflow-hidden rounded-xl bg-dark-700/40">
-      <div className="px-5 py-3.5 bg-dark-700/60 flex items-center justify-between">
-        <h3 className="text-xs font-semibold tracking-wide text-gray-300 uppercase">{title}</h3>
-        <ChevronDown size={14} className="text-gray-500" />
+    <Card className="p-0 overflow-hidden rounded-xl bg-[#EDEDED] border border-brand-soft shadow-none">
+      <div className="px-5 py-3.5 bg-[#EDEDED] flex items-center justify-between">
+        <h3 className="text-label-16 text-brand-text">{title}</h3>
+        <ChevronDown size={14} className="text-brand-text" />
       </div>
-      <div className="p-5 bg-dark-800/50">{children}</div>
+      <div className="p-5 bg-[#EDEDED]">{children}</div>
     </Card>
   )
 }
@@ -86,14 +86,14 @@ export const WorkOrderEditSidebar: React.FC<WorkOrderEditSidebarProps> = ({ onCl
   }
 
   return (
-    <div className="w-full max-w-[1200px] rounded-2xl bg-dark-800 border border-dark-700 p-6 space-y-4">
+    <div className="w-full max-w-[1200px] rounded-2xl bg-[#A5A5A5] border border-brand-soft p-6 space-y-4">
       <div className="flex items-start justify-between gap-3">
         <div>
-          <h2 className="text-sm font-semibold text-gray-100">ORDEN DE TRABAJO #OT-204</h2>
-          <p className="text-[11px] text-gray-500 mt-1">Vinculada a incidencia #INC-310</p>
+          <h2 className="text-title-24 text-brand-text">ORDEN DE TRABAJO #OT-204</h2>
+          <p className="text-text-12 font-normal text-brand-text mt-1">Cinta no arricanza correctamente</p>
         </div>
         <button
-          className="text-gray-500 hover:text-gray-300 transition-colors"
+          className="text-brand-text hover:text-brand-black transition-colors"
           aria-label="Cerrar sidebar"
           onClick={onClose}
         >
@@ -101,244 +101,134 @@ export const WorkOrderEditSidebar: React.FC<WorkOrderEditSidebarProps> = ({ onCl
         </button>
       </div>
 
-      <Card className="space-y-3">
-        <div className="grid grid-cols-2 gap-3 text-xs">
-          <div>
-            <p className="text-gray-500 mb-1">Sala</p>
-            <p className="text-gray-100 font-medium">Técnico</p>
-          </div>
+      <Card className="space-y-3 bg-brand-sectionBg border border-brand-border shadow-none">
+        <div className="grid grid-cols-2 gap-3">
+          <p className="text-right text-[14px] leading-5 font-normal text-brand-text">Sala Fitness</p>
+        </div>
+        <div className="grid grid-cols-2 gap-3">
+          <p className="text-text-12 font-semibold text-brand-textStrong">Técnico</p>
           <div className="text-right">
-            <p className="text-gray-500 mb-1">Sala Privada</p>
-            <Badge variant="danger">Crítico</Badge>
+            <span className="px-2 py-0.5 rounded text-[12px] font-normal" style={{ backgroundColor: 'rgba(255, 0, 0, 0.2)', color: '#FF0000' }}>Crítica</span>
           </div>
         </div>
-        <div className="grid grid-cols-2 gap-3 text-xs">
-          <div>
-            <p className="text-gray-500 mb-1">SLA</p>
-            <p className="text-gray-100 font-medium">6 h</p>
-          </div>
+        <div className="grid grid-cols-2 gap-3">
+          <p className="text-text-12 font-semibold text-brand-textStrong">SLA</p>
           <div className="text-right">
-            <p className="text-gray-500 mb-1">Estado</p>
-            <Badge variant={statusVariant}>{status}</Badge>
+            <span className="px-2 py-0.5 rounded text-[12px] font-normal" style={{ backgroundColor: 'rgba(234, 88, 12, 0.2)', color: '#EA580C' }}>En progreso</span>
           </div>
         </div>
       </Card>
 
       <Section title="Información básica">
-        <div className="space-y-3 text-xs">
-          <div>
-            <p className="text-gray-500">Título</p>
-            <p className="text-gray-100">Reparación motor cinta NordiTrack 03</p>
+        <div className="space-y-3">
+          <div className="grid grid-cols-[1fr_auto] gap-2 items-start">
+            <p className="text-text-12 font-semibold text-brand-textStrong">Título</p>
+            <p className="text-[14px] leading-5 font-normal text-brand-text text-right">Reparación motor cinta NordiTrack 03</p>
           </div>
-          <div className="grid grid-cols-2 gap-2">
-            <div>
-              <p className="text-gray-500">Sala</p>
-              <p className="text-gray-200">Clínica Norte / Planta baja</p>
-            </div>
-            <div>
-              <p className="text-gray-500">Código de activo</p>
-              <p className="text-gray-200">CINTA-FN03 (Equipamiento)</p>
-            </div>
+          <div className="grid grid-cols-[1fr_auto] gap-2 items-start">
+            <p className="text-[14px] leading-5 font-normal text-brand-text text-right">Sala Fitness (1* planta)</p>
           </div>
-          <div className="grid grid-cols-2 gap-2">
-            <div>
-              <p className="text-gray-500">Asignado a</p>
-              <p className="text-gray-200">{assignee}</p>
-            </div>
-            <div>
-              <p className="text-gray-500">Fecha de creación</p>
-              <p className="text-gray-200">10/10/2025 - 12:00</p>
-            </div>
+          <div className="grid grid-cols-[1fr_auto] gap-2 items-start">
+            <p className="text-text-12 font-semibold text-brand-textStrong">Creada por</p>
+            <p className="text-[14px] leading-5 font-normal text-brand-text text-right">Marta Gómez (Recepción)</p>
           </div>
-          <div className="grid grid-cols-2 gap-2">
-            <label className="text-gray-500">
-              Estado
-              <select
-                value={status}
-                onChange={(event) => setStatus(event.target.value as WorkOrderStatus)}
-                className="mt-1 w-full rounded-md border border-dark-700 bg-dark-900 px-2 py-1.5 text-xs text-gray-200 outline-none focus:border-primary-500"
-              >
-                {WORK_ORDER_STATUS_OPTIONS.map((option) => (
-                  <option key={option} value={option}>{option}</option>
-                ))}
-              </select>
-            </label>
-            <label className="text-gray-500">
-              Reasignar a
-              <select
-                value={assignee}
-                onChange={(event) => setAssignee(event.target.value)}
-                className="mt-1 w-full rounded-md border border-dark-700 bg-dark-900 px-2 py-1.5 text-xs text-gray-200 outline-none focus:border-primary-500"
-              >
-                {ASSIGNEE_OPTIONS.map((option) => (
-                  <option key={option} value={option}>{option}</option>
-                ))}
-              </select>
-            </label>
+          <div className="grid grid-cols-[1fr_auto] gap-2 items-start">
+            <p className="text-text-12 font-semibold text-brand-textStrong">Asignado a</p>
+            <p className="text-[14px] leading-5 font-normal text-brand-text text-right">{assignee}</p>
           </div>
-          <div className="grid grid-cols-2 gap-2">
-            <div>
-              <p className="text-gray-500">Fecha límite SLA</p>
-              <p className="text-gray-200">11/10/2025 - 17:00</p>
-            </div>
-            <div>
-              <p className="text-gray-500">Última actualización</p>
-              <p className="text-gray-200">17/10/2025 - 12:30</p>
-            </div>
+          <div className="grid grid-cols-[1fr_auto] gap-2 items-start">
+            <p className="text-text-12 font-semibold text-brand-textStrong">Fecha de creación</p>
+            <p className="text-[14px] leading-5 font-normal text-brand-text text-right">10/10/2025 - 10:00</p>
+          </div>
+          <div className="grid grid-cols-[1fr_auto] gap-2 items-start">
+            <p className="text-text-12 font-semibold text-brand-textStrong">Fecha límite (SLA)</p>
+            <p className="text-[14px] leading-5 font-normal text-brand-text text-right">11/10/2025 - 17:00</p>
+          </div>
+          <div className="grid grid-cols-[1fr_auto] gap-2 items-start">
+            <p className="text-text-12 font-semibold text-brand-textStrong">Última actualización</p>
+            <p className="text-[14px] leading-5 font-normal text-brand-text text-right">11/10/2025 - 12:30</p>
           </div>
         </div>
       </Section>
 
       <Section title="Historial de cambios">
-        <div className="space-y-2 text-[11px]">
-          <div className="grid grid-cols-[20px_1fr_70px] gap-2 text-gray-400">
-            <span>○</span>
-            <span>Creación OT #203 y vínculo</span>
-            <span>Completo</span>
+        <div className="space-y-4">
+          <div className="rounded-xl border border-brand-soft bg-[#FFFFFF] overflow-hidden">
+            <div className="grid grid-cols-[0.3fr_2fr_1.2fr] gap-3 px-3 py-3 text-[12px] leading-4 font-semibold text-[#111111]">
+              <span>Paso</span>
+              <span>Descripción</span>
+              <span>Resultado</span>
+            </div>
+            <div className="grid grid-cols-[0.3fr_2fr_1.2fr] gap-3 px-3 py-3 text-[12px] leading-5 font-normal text-[#666666] border-t border-brand-soft items-center">
+              <input type="checkbox" defaultChecked className="w-4 h-4 cursor-pointer" />
+              <span>Desconectar equipo y verificar alimentación</span>
+              <span className="px-2 py-0.5 bg-[#E8F5E9] text-[#32CD32] rounded text-[12px] font-normal w-fit">Correcto</span>
+            </div>
+            <div className="grid grid-cols-[0.3fr_2fr_1.2fr] gap-3 px-3 py-3 text-[12px] leading-5 font-normal text-[#666666] border-t border-brand-soft items-center">
+              <input type="checkbox" defaultChecked className="w-4 h-4 cursor-pointer" />
+              <span>Medir voltaje del motor principal</span>
+              <span className="text-[#666666]">230V</span>
+            </div>
+            <div className="grid grid-cols-[0.3fr_2fr_1.2fr] gap-3 px-3 py-3 text-[12px] leading-5 font-normal text-[#666666] border-t border-brand-soft items-center">
+              <input type="checkbox" defaultChecked className="w-4 h-4 cursor-pointer" />
+              <span>Sustituir fusible principal</span>
+              <span className="px-2 py-0.5 bg-[#E8F5E9] text-[#32CD32] rounded text-[12px] font-normal w-fit">Hecho</span>
+            </div>
+            <div className="grid grid-cols-[0.3fr_2fr_1.2fr] gap-3 px-3 py-3 text-[12px] leading-5 font-normal text-[#666666] border-t border-brand-soft items-center">
+              <input type="checkbox" defaultChecked className="w-4 h-4 cursor-pointer" />
+              <span>Verificar velocidad tras encendido</span>
+              <span className="px-2 py-0.5 bg-[#FFF3E0] text-[#EA580C] rounded text-[12px] font-normal w-fit">Pendiente</span>
+            </div>
           </div>
-          <div className="grid grid-cols-[20px_1fr_70px] gap-2 text-gray-400">
-            <span>○</span>
-            <span>Motor retirado en banco principal</span>
-            <span>25%</span>
+          
+          <div className="flex items-center gap-2 px-3 py-2 bg-[#EDEDED] rounded-lg">
+            <Camera size={16} className="text-[#000000]" />
+            <span className="text-text-12 font-semibold text-brand-textStrong">Marta Gómez</span>
+            <button className="ml-auto px-3 py-1 rounded-lg bg-[#FFFFFF] text-[14px] font-medium text-[#666666] hover:bg-[#F5F5F5]">+Añadir</button>
           </div>
-          <div className="grid grid-cols-[20px_1fr_70px] gap-2 text-gray-400">
-            <span>○</span>
-            <span>Cambio fusible principal</span>
-            <span>50%</span>
-          </div>
-          <div className="grid grid-cols-[20px_1fr_70px] gap-2 text-gray-300">
-            <span>●</span>
-            <span>Verificar velocidad tras encendido</span>
-            <span>En curso</span>
-          </div>
-          <div className="flex items-center justify-between text-gray-400 pt-1">
-            <span>⚠ Alertas de mantenimiento</span>
-            <button className="px-2 py-1 rounded bg-dark-900 border border-dark-700 text-[10px]">Ver</button>
+          
+          <div>
+            <p className="text-text-12 font-semibold text-brand-textStrong mb-2">Notas adicionales:</p>
+            <div className="rounded-xl border border-brand-soft bg-[#FFFFFF] p-4">
+              <p className="text-text-12 font-normal leading-relaxed text-brand-text">
+                "El motor respondía intermitentemente; se recomienda revisar conexiones internas."
+              </p>
+            </div>
           </div>
         </div>
       </Section>
 
-      <Section title="Notas adicionales">
-        <textarea
-          rows={3}
-          placeholder="El motor respondió intermitentemente, se recomiendan revisar conexiones internas."
-          className="w-full bg-dark-900 border border-dark-700 rounded-md px-3 py-2 text-xs text-gray-100 placeholder:text-gray-500 outline-none focus:border-primary-500 resize-none"
-        />
-      </Section>
-
-      <Section title="Materiales usados">
-        <div className="space-y-2 text-[11px] text-gray-300">
-          <div className="grid grid-cols-[80px_1fr_30px_45px_65px] gap-2 text-gray-500 uppercase">
-            <span>Código</span>
-            <span>Descripción</span>
-            <span>Cant.</span>
-            <span>Unidad</span>
-            <span>Costo</span>
-          </div>
-          <div className="grid grid-cols-[80px_1fr_30px_45px_65px] gap-2">
-            <span>MTT-013</span>
-            <span>FSP 40-4</span>
-            <span>1</span>
-            <span>Und</span>
-            <span>3.50 USD</span>
-          </div>
-          <div className="grid grid-cols-[80px_1fr_30px_45px_65px] gap-2">
-            <span>MTT-015</span>
-            <span>FSP 40-5</span>
-            <span>1</span>
-            <span>Und</span>
-            <span>3.30 USD</span>
-          </div>
+<Card className="p-0 overflow-hidden rounded-xl bg-[#EDEDED] border border-brand-soft shadow-none space-y-0">
+        <div className="px-5 py-3.5 bg-[#EDEDED] flex items-center justify-between">
+          <h3 className="text-label-16 text-brand-text">Observaciones finales</h3>
         </div>
-      </Section>
-
-      <Section title="Tiempo de ejecución">
-        <div className="space-y-2 text-xs">
-          <div className="grid grid-cols-2 gap-2">
-            <div>
-              <p className="text-gray-500">Inicio</p>
-              <p className="text-gray-200">10/10/2025 - 10:15</p>
-            </div>
-            <div>
-              <p className="text-gray-500">Fin</p>
-              <p className="text-gray-200">11/10/2025 - 17:30</p>
-            </div>
+        <div className="p-5 bg-[#EDEDED] space-y-3">
+          <div className="grid grid-cols-[1fr_auto] gap-2 items-start">
+            <p className="text-text-12 font-semibold text-brand-textStrong">Firma del técnico</p>
+            <p className="text-[14px] leading-5 font-normal text-brand-text text-right">10/10/2025 - 10:15</p>
+          </div>
+          <div className="grid grid-cols-[1fr_auto] gap-2 items-start">
+            <p className="text-text-12 font-semibold text-brand-textStrong">Firma del responsable</p>
+            <p className="text-[14px] leading-5 font-normal text-brand-text text-right">11/10/2025 - 12:10</p>
           </div>
           <div>
-            <p className="text-gray-500">Duración total</p>
-            <p className="text-gray-200">~31.5 horas</p>
+            <p className="text-text-12 font-semibold text-brand-textStrong">Observaciones finales</p>
+            <p className="text-text-12 font-normal text-brand-text mt-2">
+              Equipo probado y en funcionamiento normal. Se recomienda mantenimiento preventivo en 30 días.
+            </p>
           </div>
-          <div className="pt-1">
-            <Button variant="primary" className="w-full">Registrar horas y piezas</Button>
-          </div>
-        </div>
-      </Section>
-
-      <Section title="Medios">
-        <div className="space-y-3">
-          <input
-            ref={fileInputRef}
-            type="file"
-            accept="image/*"
-            multiple
-            className="hidden"
-            onChange={handleSelectFiles}
-          />
-          <button
-            type="button"
-            onClick={handleOpenFilePicker}
-            className="w-full border border-dark-700 rounded-lg py-4 px-3 bg-dark-900 hover:bg-dark-800 transition-colors text-center"
-          >
-            <Upload size={18} className="mx-auto text-gray-300" />
-            <p className="text-[11px] text-gray-300 mt-2">Arrastra imágenes aquí o</p>
-            <p className="text-[11px] text-primary-500 mt-0.5">busca archivos</p>
-          </button>
-          <div className="grid grid-cols-4 gap-2">
-            {mediaItems.slice(0, 2).map((item) => (
-              <button key={item.id} className="h-10 rounded-md border border-dark-700 bg-dark-900 overflow-hidden">
-                {item.src.startsWith('/figma/') ? (
-                  <Image
-                    src={item.src}
-                    alt={item.alt}
-                    width={40}
-                    height={40}
-                    className="w-full h-full object-cover"
-                  />
-                ) : (
-                  <img src={item.src} alt={item.alt} className="w-full h-full object-cover" />
-                )}
-              </button>
-            ))}
-            <button className="h-10 rounded-md border border-dark-700 bg-dark-900 flex items-center justify-center text-gray-500">
-              <Video size={14} />
-            </button>
-            <button type="button" onClick={handleOpenFilePicker} className="h-10 rounded-md border border-dark-700 bg-dark-900 flex items-center justify-center text-gray-300">
-              <Plus size={14} />
-            </button>
-          </div>
-          <div className="text-center text-[11px] text-gray-400 border border-dark-700 rounded-md py-2">Subir video (máx. 30s)</div>
-        </div>
-      </Section>
-
-      <Card className="text-xs space-y-2">
-        <div className="flex items-center justify-between">
-          <p className="text-gray-500">Firma del técnico</p>
-          <p className="text-gray-300">10/10/2025 - 17:05</p>
-        </div>
-        <div className="flex items-center justify-between">
-          <p className="text-gray-500">Firma del responsable</p>
-          <p className="text-gray-300">11/10/2025 - 12:10</p>
-        </div>
-        <div>
-          <p className="text-gray-500">Observaciones finales</p>
-          <p className="text-gray-200 mt-1">Equipo probado y en funcionamiento normal. Se recomienda mantenimiento preventivo en 30 días.</p>
         </div>
       </Card>
 
-      <div className="flex gap-2 pt-1">
-        <Button variant="secondary" className="flex-1" onClick={handleChangeStatus}>Cambiar estado</Button>
-        <Button variant="secondary" className="flex-1" onClick={handleReassign}>Reasignar</Button>
-        <Button variant="secondary" className="flex-1" onClick={onComplete}>Completar y cerrar</Button>
+      <div className="rounded-2xl bg-[#EDEDED] p-3 flex gap-2 items-center justify-center">
+        <Button
+          variant="primary"
+          size="sm"
+          className="!rounded-lg !px-4 !py-1.5 !text-[14px] !leading-5 !font-medium !bg-gradient-to-r !from-[#FF56B0] !to-[#8C4787] !border-0 !text-[#FFFFFF] hover:!opacity-95 !shadow-none"
+          onClick={onComplete}
+        >
+          Completar y cerrar
+        </Button>
       </div>
     </div>
   )

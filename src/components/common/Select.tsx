@@ -25,20 +25,23 @@ export const Select: React.FC<SelectProps> = ({
   return (
     <div className="w-full">
       {label && (
-        <label htmlFor={selectId} className="block text-sm font-medium text-gray-200 mb-2">
+        <label
+          htmlFor={selectId}
+          className="mb-2 block text-label-14 text-brand-textStrong"
+        >
           {label}
-          {props.required && <span className="text-primary-500 ml-1">*</span>}
+          {props.required && <span className="ml-1 text-brand-primary">*</span>}
         </label>
       )}
       <div className="relative">
         <select
           id={selectId}
           className={`
-            w-full px-3 py-2 bg-dark-800 border border-dark-600 rounded
-            text-gray-100 appearance-none cursor-pointer
-            focus:outline-none focus:border-primary-500 focus:ring-1 focus:ring-primary-500
-            disabled:bg-dark-700 disabled:text-gray-500 disabled:cursor-not-allowed
-            ${error ? 'border-red-500 focus:border-red-500 focus:ring-red-500' : ''}
+            w-full rounded-lg border border-brand-border bg-brand-white px-3 py-2
+            text-[16px] leading-6 font-normal text-brand-text appearance-none cursor-pointer
+            focus:outline-none focus:border-brand-active focus:ring-1 focus:ring-brand-active
+            disabled:cursor-not-allowed disabled:bg-brand-surface disabled:text-brand-text
+            ${error ? 'border-brand-danger focus:border-brand-danger focus:ring-brand-danger' : ''}
             ${className}
           `}
           {...props}
@@ -52,10 +55,10 @@ export const Select: React.FC<SelectProps> = ({
         </select>
         <ChevronDown
           size={16}
-          className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 pointer-events-none"
+          className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-brand-text"
         />
       </div>
-      {error && <p className="text-xs text-red-400 mt-1">{error}</p>}
+      {error && <p className="mt-1 text-text-12 text-brand-danger">{error}</p>}
     </div>
   )
 }

@@ -5,10 +5,11 @@ import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import {
   Menu,
   X,
-  Home,
   ShieldAlert,
   User,
 } from 'lucide-react'
+
+type SidebarFlow = 'incident' | 'membership'
 
 export const Sidebar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false)
@@ -20,19 +21,13 @@ export const Sidebar: React.FC = () => {
   const isSidebarHidden = searchParams.get('sidebar') === 'hidden'
 
   const menuItems = [
-    { id: 'home', label: 'Inicio', Icon: Home, flow: null },
     { id: 'incident', label: 'Incidencias', Icon: ShieldAlert, flow: 'incident' },
     { id: 'membership', label: 'Membresías', Icon: User, flow: 'membership' },
-  ]
+  ] as const
 
-  const handleNavigation = (flow: string | null) => {
+  const handleNavigation = (flow: SidebarFlow) => {
     const params = new URLSearchParams(searchParams.toString())
-
-    if (flow) {
-      params.set('flow', flow)
-    } else {
-      params.delete('flow')
-    }
+    params.set('flow', flow)
 
     const query = params.toString()
     router.push(query ? `${pathname}?${query}` : pathname)
@@ -44,27 +39,27 @@ export const Sidebar: React.FC = () => {
       {/* Mobile toggle button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="lg:hidden fixed top-4 left-4 z-50 p-2 bg-dark-800 rounded-lg border border-dark-700"
+        className="lg:hidden fixed top-4 left-4 z-50 p-2 bg-brand-sectionBg rounded-lg border border-brand-border"
       >
-        {isOpen ? <X size={20} /> : <Menu size={20} />}
+        {isOpen ? <X size={20} className="text-brand-textStrong" /> : <Menu size={20} className="text-brand-textStrong" />}
       </button>
 
       {/* Sidebar */}
       <aside
         className={`
-          fixed left-0 top-0 bottom-0 w-64 bg-dark-900 border-r border-dark-700
+          fixed left-0 top-0 bottom-0 w-64 bg-brand-sidebarBg border-r border-brand-border
           transform transition-transform duration-300 z-40
           ${isOpen ? 'translate-x-0' : '-translate-x-full'} ${isSidebarHidden ? 'lg:-translate-x-full' : 'lg:translate-x-0'}
         `}
       >
         <div className="p-6">
-          <h1 className="text-xl font-bold text-white mb-8">
-            <span className="text-primary-500">Test</span>Next
+          <h1 className="text-xl font-bold text-brand-textStrong mb-8">
+            <span className="text-brand-primaryEnd">Test</span>Next
           </h1>
 
           <nav className="space-y-2">
             {menuItems.map((item) => {
-              const isActive = item.flow ? activeFlow === item.flow : !activeFlow
+              const isActive = activeFlow === item.flow
 
               return (
               <button
@@ -72,8 +67,8 @@ export const Sidebar: React.FC = () => {
                 onClick={() => handleNavigation(item.flow)}
                 className={`
                   w-full text-left px-4 py-3 rounded-lg transition-colors duration-200
-                  hover:bg-dark-800 text-gray-200 flex items-center gap-3
-                  ${isActive ? 'bg-primary-600 text-white' : ''}
+                  text-brand-textStrong flex items-center gap-3
+                  ${isActive ? 'bg-brand-primary text-brand-white' : 'hover:bg-brand-sectionBg'}
                 `}
               >
                 <item.Icon size={16} aria-hidden="true" />

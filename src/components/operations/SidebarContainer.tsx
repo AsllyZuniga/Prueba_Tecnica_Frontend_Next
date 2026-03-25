@@ -11,14 +11,13 @@ interface SidebarContainerProps {
 
 export const SidebarContainer: React.FC<SidebarContainerProps> = ({ onClose, onCreateIncident }) => {
   return (
-    <div className="w-full max-w-[1200px] rounded-2xl bg-dark-800 border border-dark-700 p-6 space-y-4">
+    <div className="w-full max-w-[1200px] rounded-2xl bg-[#A5A5A5] border border-brand-border p-6 space-y-4">
       <div className="flex items-start justify-between">
         <div>
-          <h2 className="text-sm font-semibold text-gray-100">Detalle de la sala</h2>
-          <p className="text-[11px] text-gray-500 mt-1">Resumen operativo</p>
+          <h2 className="text-title-24 text-brand-text">Detalle de la sala</h2>
         </div>
         <button
-          className="text-gray-500 hover:text-gray-300 transition-colors"
+          className="text-brand-text hover:text-brand-black transition-colors"
           aria-label="Cerrar sidebar"
           onClick={onClose}
         >
@@ -26,63 +25,82 @@ export const SidebarContainer: React.FC<SidebarContainerProps> = ({ onClose, onC
         </button>
       </div>
 
-      <Card className="space-y-3">
-        <div className="grid grid-cols-2 gap-3 text-xs">
-          <div>
-            <p className="text-gray-500 mb-1">Sala Fitness</p>
-            <p className="text-gray-100 font-medium">Planta</p>
+      <Card className="space-y-3 bg-[#EDEDED] border border-brand-border shadow-none">
+        <p className="text-label-16 text-brand-text">Sala Fitness</p>
+        <div className="rounded-xl bg-[#FCFCFC] border border-brand-soft p-4 space-y-3">
+          <div className="grid grid-cols-2 gap-3">
+            <div>
+              <p className="text-label-14 text-brand-textStrong">Planta</p>
+            </div>
+            <div className="text-right">
+              <p className="text-[16px] leading-6 font-normal text-brand-text">1</p>
+            </div>
           </div>
-          <div className="text-right">
-            <p className="text-gray-500 mb-1">GH</p>
-            <p className="text-gray-300">S-001</p>
+          <div className="h-px bg-brand-soft" />
+          <div className="grid grid-cols-2 gap-3">
+            <div>
+              <p className="text-label-14 text-brand-textStrong">QR</p>
+            </div>
+            <div className="text-right">
+              <p className="text-[16px] leading-6 font-normal text-brand-text">S-001</p>
+            </div>
           </div>
-        </div>
-        <div className="flex items-center justify-between text-xs">
-          <p className="text-gray-500">Estado</p>
-          <Badge variant="info" className="bg-primary-600 text-white">En revisión</Badge>
+          <div className="h-px bg-brand-soft" />
+          <div className="flex items-center justify-between">
+            <p className="text-label-14 text-brand-textStrong">Estado</p>
+            <Badge variant="warning">En revisión</Badge>
+          </div>
         </div>
       </Card>
 
-      <Card className="p-0 overflow-hidden rounded-xl bg-dark-700/40">
-        <div className="px-5 py-3.5 bg-dark-700/60 flex items-center justify-between">
-          <h3 className="text-xs font-semibold tracking-wide text-gray-300 uppercase">Listado de zonas con inasistencia</h3>
-          <ChevronDown size={14} className="text-gray-500" />
-        </div>
-
-        <div className="p-5 pt-4 space-y-3 bg-dark-800/50">
-          <div className="grid grid-cols-[70px_1fr_70px_70px] gap-2 text-[10px] text-gray-500 uppercase tracking-wide">
-            <span>Zona</span>
-            <span>Categoría</span>
-            <span>Estado</span>
-            <span>Última PM</span>
-          </div>
-
-          <div className="grid grid-cols-[70px_1fr_70px_70px] gap-2 text-xs text-gray-300 items-center">
-            <span>GH-01</span>
-            <span className="truncate">Fuerza</span>
-            <span><Badge variant="danger" className="bg-rose-600 text-white">Falta</Badge></span>
-            <span>12/02/2025</span>
-          </div>
-
-          <div className="grid grid-cols-[70px_1fr_70px_70px] gap-2 text-xs text-gray-300 items-center">
-            <span>GH-02</span>
-            <span className="truncate">Cardio</span>
-            <span><Badge variant="warning" className="bg-amber-500 text-white">Alerta</Badge></span>
-            <span>11/02/2025</span>
-          </div>
-
-          <div className="grid grid-cols-2 gap-2 pt-1">
-            <Button variant="secondary" className="w-full">
+      <Card className="p-0 overflow-hidden rounded-xl bg-[#EDEDED] border border-brand-border shadow-none">
+        <div className="px-5 py-3.5 bg-[#EDEDED] flex items-center justify-between">
+          <h3 className="text-label-16 text-brand-text">Listado de ítems en la sala</h3>
+          <div className="flex items-center gap-2 text-brand-text">
+            <button type="button" className="w-8 h-8 rounded-full border border-dashed border-brand-text/60 flex items-center justify-center">
               <Plus size={14} />
-              Añadir ítem
-            </Button>
-            <Button variant="primary" className="w-full" onClick={onCreateIncident}>
-              <AlertTriangle size={14} />
-              Crear incidencia
-            </Button>
+            </button>
+            <ChevronDown size={14} className="text-brand-text" />
+          </div>
+        </div>
+
+        <div className="p-5 pt-4 bg-[#EDEDED]">
+          <div className="rounded-xl border border-brand-soft bg-[#FCFCFC] overflow-hidden">
+            <div className="grid grid-cols-[1fr_1fr_80px_90px] gap-2 px-4 py-3 text-label-14 text-brand-textStrong">
+              <span>Ítem</span>
+              <span>Categoría</span>
+              <span>Estado</span>
+              <span>Último PM</span>
+            </div>
+            <div className="h-px bg-brand-soft" />
+            <div className="grid grid-cols-[1fr_1fr_80px_90px] gap-2 px-4 py-3 text-[16px] leading-6 font-normal text-brand-text">
+              <span>Cinta 03</span>
+              <span className="truncate">Fitness Machines</span>
+              <span><Badge variant="danger">Falla</Badge></span>
+              <span>12/09/2025</span>
+            </div>
+            <div className="h-px bg-brand-soft" />
+            <div className="grid grid-cols-[1fr_1fr_80px_90px] gap-2 px-4 py-3 text-[16px] leading-6 font-normal text-brand-text">
+              <span>Aire 02</span>
+              <span className="truncate">HVAC</span>
+              <span><Badge variant="success">OK</Badge></span>
+              <span>12/09/2025</span>
+            </div>
           </div>
         </div>
       </Card>
+
+      <div className="rounded-xl border border-brand-border bg-[#EDEDED] p-3">
+        <div className="grid grid-cols-2 gap-2">
+          <Button variant="neutral" size="lg" className="w-full bg-[#FFFFFF] hover:bg-[#FFFFFF] text-brand-text text-[16px] leading-6 font-semibold border-brand-border">
+            <Plus size={14} />
+            Añadir ítem
+          </Button>
+          <Button variant="primary" size="lg" className="w-full" onClick={onCreateIncident}>
+            Crear incidencia
+          </Button>
+        </div>
+      </div>
     </div>
   )
 }

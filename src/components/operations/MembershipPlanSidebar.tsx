@@ -1,39 +1,49 @@
 'use client'
 
 import React, { useMemo, useState } from 'react'
-import { ChevronDown, Plus, X } from 'lucide-react'
+import { Plus, X } from 'lucide-react'
 import { Button, Card, Input, Select, Textarea } from '@/src/components/common'
 
 const Section: React.FC<{ title: string; children: React.ReactNode }> = ({ title, children }) => {
   return (
-    <Card className="p-0 overflow-hidden rounded-xl bg-brand-white border border-brand-soft shadow-none">
-      <div className="px-5 py-3.5 bg-brand-surface flex items-center justify-between">
-        <h3 className="text-xs font-semibold tracking-wide text-brand-text">{title}</h3>
-        <ChevronDown size={14} className="text-brand-text" />
+    <Card className="rounded-xl bg-brand-sectionBg border border-brand-border shadow-none p-5">
+      <div className="mb-3">
+        <h3 className="text-label-16 text-brand-text">{title}</h3>
       </div>
-      <div className="p-5 bg-brand-white">{children}</div>
+      <div>{children}</div>
     </Card>
   )
 }
 
-const ToggleRow: React.FC<{ label: string; enabled?: boolean; onToggle?: () => void }> = ({
+const ToggleRow: React.FC<{
+  label: string;
+  enabled?: boolean;
+  onToggle?: () => void;
+  stateText?: string;
+  labelClassName?: string;
+}> = ({
   label,
   enabled = true,
   onToggle,
+  stateText,
+  labelClassName,
 }) => {
   return (
     <div className="flex items-center justify-between">
-      <span className="text-xs font-normal text-brand-text">{label}</span>
-      <button
-        type="button"
-        onClick={onToggle}
-        className={`w-8 h-4 rounded-full relative transition-colors ${enabled ? 'bg-brand-toggle' : 'bg-brand-toggle/35'}`}
-        aria-label={`Cambiar estado de ${label}`}
-      >
-        <span
-          className={`absolute top-0.5 w-3 h-3 rounded-full bg-white transition-all ${enabled ? 'left-4' : 'left-0.5'}`}
-        />
-      </button>
+      <span className={labelClassName ?? 'text-label-14 text-brand-textStrong'}>{label}</span>
+      <div className="flex items-center gap-2">
+        {stateText && <span className="text-label-12 text-brand-toggle">{stateText}</span>}
+        <button
+          type="button"
+          onClick={onToggle}
+          className={`w-8 h-4 rounded-full relative transition-colors ${enabled ? 'bg-brand-toggle' : 'bg-brand-toggle/35'}`}
+          aria-label={`Cambiar estado de ${label}`}
+        >
+          <span
+            className={`absolute top-0.5 w-3 h-3 rounded-full bg-white transition-all ${enabled ? 'left-4' : 'left-0.5'}`}
+          />
+        </button>
+      </div>
     </div>
   )
 }
@@ -50,12 +60,16 @@ export const MembershipPlanSidebar: React.FC<MembershipPlanSidebarProps> = ({ on
     active: true,
     basePrice: '5.00',
     cycle: 'mensual',
+    periodicity: '30',
     limit: '4',
     prorationDays: '31',
     renewalDiscount: '15',
     maxPercent: '50',
-    quotas: 'Todos los centros',
-    facilities: 'Gimnasio, Piscina, Sauna',
+    allowedCenters: 'todos',
+    facilitiesAccess: 'gym-pool-sauna',
+    defaultEnrollment: 'mensual',
+    eventAccess: 'preferente',
+    allAllowedAccesses: 'semana-manana-preferente',
     lockAllCenters: true,
     trainingPlan: true,
     nutritionPlan: false,
@@ -96,9 +110,9 @@ export const MembershipPlanSidebar: React.FC<MembershipPlanSidebarProps> = ({ on
   }
 
   return (
-    <div className="w-full max-w-[1200px] rounded-2xl bg-brand-surface border border-brand-soft p-6 space-y-4">
+    <div className="w-full max-w-[1200px] rounded-2xl bg-brand-sidebarBg border border-brand-border p-6 space-y-4">
       <div className="flex items-center justify-between">
-        <h2 className="text-2xl font-semibold text-brand-black">Crear nuevo plan</h2>
+        <h2 className="text-title-24 text-brand-text">Crear nuevo plan</h2>
         <button
           className="text-brand-text hover:text-brand-black transition-colors"
           aria-label="Cerrar sidebar"
@@ -125,20 +139,27 @@ export const MembershipPlanSidebar: React.FC<MembershipPlanSidebarProps> = ({ on
             onChange={(e) => updateField('description', e.target.value)}
             required
           />
-          <ToggleRow label="Activo" enabled={form.active} onToggle={() => updateField('active', !form.active)} />
+          <ToggleRow
+            label="Estado"
+            stateText={form.active ? 'Activo' : 'Inactivo'}
+            enabled={form.active}
+            onToggle={() => updateField('active', !form.active)}
+          />
         </div>
       </Section>
 
       <Section title="Precio y condiciones">
         <div className="space-y-3">
           <div className="grid grid-cols-2 gap-2">
-            <Input
+            <Select
               label="Precio base"
-              type="number"
-              min="0"
-              step="0.01"
               value={form.basePrice}
               onChange={(e) => updateField('basePrice', e.target.value)}
+              options={[
+                { label: '5.00', value: '5.00' },
+                { label: '10.00', value: '10.00' },
+                { label: '15.00', value: '15.00' },
+              ]}
             />
             <Select
               label="Ciclo"
@@ -159,12 +180,15 @@ export const MembershipPlanSidebar: React.FC<MembershipPlanSidebarProps> = ({ on
             onChange={(e) => updateField('limit', e.target.value)}
           />
           <div className="grid grid-cols-2 gap-2">
-            <Input
-              label="Periodo prorrateo en días"
-              type="number"
-              min="0"
-              value={form.prorationDays}
-              onChange={(e) => updateField('prorationDays', e.target.value)}
+            <Select
+              label="Periodicidad"
+              value={form.periodicity}
+              onChange={(e) => updateField('periodicity', e.target.value)}
+              options={[
+                { label: '7 días', value: '7' },
+                { label: '15 días', value: '15' },
+                { label: '30 días', value: '30' },
+              ]}
             />
             <Input
               label="Descuento de renovación (%)"
@@ -187,15 +211,45 @@ export const MembershipPlanSidebar: React.FC<MembershipPlanSidebarProps> = ({ on
 
       <Section title="Acceso y beneficios">
         <div className="space-y-3">
-          <Input
-            label="Cuotas permitidas"
-            value={form.quotas}
-            onChange={(e) => updateField('quotas', e.target.value)}
+          <Select
+            label="Centros permitidos"
+            value={form.allowedCenters}
+            onChange={(e) => updateField('allowedCenters', e.target.value)}
+            options={[
+              { label: 'Todos los centros', value: 'todos' },
+              { label: 'Centro Norte', value: 'norte' },
+              { label: 'Centro Sur', value: 'sur' },
+            ]}
           />
-          <Input
+          <Select
             label="Acceso a instalaciones"
-            value={form.facilities}
-            onChange={(e) => updateField('facilities', e.target.value)}
+            value={form.facilitiesAccess}
+            onChange={(e) => updateField('facilitiesAccess', e.target.value)}
+            options={[
+              { label: 'Gimnasio, Piscina, Sauna', value: 'gym-pool-sauna' },
+              { label: 'Solo gimnasio', value: 'gym-only' },
+              { label: 'Gimnasio y piscina', value: 'gym-pool' },
+            ]}
+          />
+          <Select
+            label="Matrícula por defecto"
+            value={form.defaultEnrollment}
+            onChange={(e) => updateField('defaultEnrollment', e.target.value)}
+            options={[
+              { label: 'Mensual', value: 'mensual' },
+              { label: 'Trimestral', value: 'trimestral' },
+              { label: 'Anual', value: 'anual' },
+            ]}
+          />
+          <Select
+            label="Acceso a eventos"
+            value={form.eventAccess}
+            onChange={(e) => updateField('eventAccess', e.target.value)}
+            options={[
+              { label: 'Preferente', value: 'preferente' },
+              { label: 'General', value: 'general' },
+              { label: 'Sin acceso', value: 'none' },
+            ]}
           />
           <ToggleRow
             label="Todos los centros e instalaciones tienen lock"
@@ -219,13 +273,13 @@ export const MembershipPlanSidebar: React.FC<MembershipPlanSidebarProps> = ({ on
                   type="time"
                   value={item.from}
                   onChange={(e) => updateSchedule(index, 'from', e.target.value)}
-                  className="h-7 rounded-md border border-brand-soft bg-brand-white px-2 text-xs text-brand-black"
+                  className="h-7 rounded-md border border-brand-soft bg-brand-white px-2 text-[16px] leading-6 font-normal text-brand-text"
                 />
                 <input
                   type="time"
                   value={item.to}
                   onChange={(e) => updateSchedule(index, 'to', e.target.value)}
-                  className="h-7 rounded-md border border-brand-soft bg-brand-white px-2 text-xs text-brand-black"
+                  className="h-7 rounded-md border border-brand-soft bg-brand-white px-2 text-[16px] leading-6 font-normal text-brand-text"
                 />
                 <button type="button" className="text-brand-text hover:text-brand-black" onClick={addScheduleRow}>
                   <Plus size={12} />
@@ -240,11 +294,13 @@ export const MembershipPlanSidebar: React.FC<MembershipPlanSidebarProps> = ({ on
         <div className="space-y-2">
           <ToggleRow
             label="Planes de entrenamiento"
+            labelClassName="text-[16px] leading-6 font-normal text-brand-text"
             enabled={form.trainingPlan}
             onToggle={() => updateField('trainingPlan', !form.trainingPlan)}
           />
           <ToggleRow
             label="Planes de nutrición"
+            labelClassName="text-[16px] leading-6 font-normal text-brand-text"
             enabled={form.nutritionPlan}
             onToggle={() => updateField('nutritionPlan', !form.nutritionPlan)}
           />
@@ -260,28 +316,33 @@ export const MembershipPlanSidebar: React.FC<MembershipPlanSidebarProps> = ({ on
 
       <Section title="Accesos al centro">
         <div className="space-y-2">
-          <Input
-            label="Acceso"
-            value={form.access}
-            onChange={(e) => updateField('access', e.target.value)}
+          <Select
+            label="Todos los accesos permitidos"
+            value={form.allAllowedAccesses}
+            onChange={(e) => updateField('allAllowedAccesses', e.target.value)}
+            options={[
+              { label: 'Semana / Mañana / Preferente', value: 'semana-manana-preferente' },
+              { label: 'Semana / Tarde', value: 'semana-tarde' },
+              { label: 'Fin de semana', value: 'fin-semana' },
+            ]}
           />
           <div className="space-y-1">
-            <div className="grid grid-cols-[50px_1fr_1fr] gap-2 text-[10px] text-brand-text uppercase">
+            <div className="grid grid-cols-[50px_1fr_1fr] gap-2 text-text-12 font-normal text-brand-text">
               <span>Tipo</span>
               <span>Evento</span>
               <span>Acceso</span>
             </div>
-            <div className="grid grid-cols-[50px_1fr_1fr] gap-2 text-[11px] text-brand-black">
+            <div className="grid grid-cols-[50px_1fr_1fr] gap-2 text-text-12 font-normal text-brand-text">
               <span>AL</span>
               <span>Evento A</span>
               <span>Semana/Mañana/Preferente</span>
             </div>
-            <div className="grid grid-cols-[50px_1fr_1fr] gap-2 text-[11px] text-brand-black">
+            <div className="grid grid-cols-[50px_1fr_1fr] gap-2 text-text-12 font-normal text-brand-text">
               <span>ES</span>
               <span>Evento B</span>
               <span>Semana/Mañana/Preferente</span>
             </div>
-            <div className="grid grid-cols-[50px_1fr_1fr] gap-2 text-[11px] text-brand-black">
+            <div className="grid grid-cols-[50px_1fr_1fr] gap-2 text-text-12 font-normal text-brand-text">
               <span>SS</span>
               <span>Evento C</span>
               <span>Semana/Mañana/Preferente</span>
@@ -299,23 +360,27 @@ export const MembershipPlanSidebar: React.FC<MembershipPlanSidebarProps> = ({ on
         />
       </Section>
 
-      <div className="flex gap-2 pt-1">
-        <Button
-          variant="secondary"
-          className="flex-1 bg-white border border-brand-border text-brand-text hover:bg-brand-surface text-base font-semibold"
-          onClick={onClose}
-        >
-          Cancelar
-        </Button>
-        <Button
-          variant="primary"
-          className="flex-1 bg-gradient-to-r from-brand-start to-brand-end hover:from-brand-start hover:to-brand-end text-white text-base font-semibold disabled:from-brand-border disabled:to-brand-border"
-          onClick={handleCreate}
-          disabled={!isValid}
-          disabledReason="Completa los campos obligatorios para poder crear el plan."
-        >
-          Crear plan
-        </Button>
+      <div className="rounded-xl border border-brand-border bg-brand-white p-3">
+        <div className="flex gap-2">
+          <Button
+            variant="secondary"
+            size="lg"
+            className="flex-1"
+            onClick={onClose}
+          >
+            Cancelar
+          </Button>
+          <Button
+            variant="primary"
+            size="lg"
+            className="flex-1"
+            onClick={handleCreate}
+            disabled={!isValid}
+            disabledReason="Completa los campos obligatorios para poder crear el plan."
+          >
+            Crear plan
+          </Button>
+        </div>
       </div>
     </div>
   )

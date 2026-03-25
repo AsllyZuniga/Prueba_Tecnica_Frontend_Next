@@ -40,16 +40,9 @@ export const Header: React.FC = () => {
               <PanelLeftClose size={20} className="text-gray-400" />
             )}
           </button>
-          <p className="text-sm font-semibold text-gray-200">TestNext</p>
         </div>
 
         <div className="flex items-center gap-4">
-          <button className="p-2 hover:bg-dark-800 rounded-lg transition-colors">
-            <Bell size={20} className="text-gray-400" />
-          </button>
-          <div className="w-8 h-8 rounded-full bg-primary-600 flex items-center justify-center text-white font-bold">
-            JD
-          </div>
         </div>
       </div>
     </header>

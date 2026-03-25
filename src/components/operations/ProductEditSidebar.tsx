@@ -23,12 +23,12 @@ const TECHNICIAN_OPTIONS = [
 
 const Section: React.FC<{ title: string; children: React.ReactNode }> = ({ title, children }) => {
   return (
-    <Card className="p-0 overflow-hidden rounded-xl bg-brand-white border border-brand-soft shadow-none">
-      <div className="px-5 py-3.5 bg-brand-surface flex items-center justify-between">
-        <h3 className="text-xs font-semibold tracking-wide text-brand-text uppercase">{title}</h3>
+    <Card className="p-0 overflow-hidden rounded-xl bg-[#EDEDED] border border-brand-soft shadow-none">
+      <div className="px-5 py-3.5 bg-[#EDEDED] flex items-center justify-between">
+        <h3 className="text-label-16 text-brand-text">{title}</h3>
         <ChevronDown size={14} className="text-brand-text" />
       </div>
-      <div className="p-5 bg-brand-white">{children}</div>
+      <div className="p-5 bg-[#EDEDED]">{children}</div>
     </Card>
   )
 }
@@ -50,7 +50,7 @@ export const ProductEditSidebar: React.FC<ProductEditSidebarProps> = ({ onClose,
   const statusVariant = useMemo(() => {
     if (status === 'Resuelta') return 'success'
     if (status === 'Pendiente') return 'warning'
-    return 'info'
+    return 'warning'
   }, [status])
 
   const handleSelectFiles = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -86,11 +86,11 @@ export const ProductEditSidebar: React.FC<ProductEditSidebarProps> = ({ onClose,
   }
 
   return (
-    <div className="w-full max-w-[1200px] rounded-2xl bg-brand-surface border border-brand-soft p-6 space-y-4">
+    <div className="w-full max-w-[1200px] rounded-2xl bg-[#A5A5A5] border border-brand-soft p-6 space-y-4">
       <div className="flex items-start justify-between gap-3">
         <div>
-          <h2 className="text-2xl font-semibold text-brand-black">INCIDENCIA #INC-310</h2>
-          <p className="text-[11px] text-brand-text mt-1">Orden de trabajo asociada: OT-204</p>
+          <h2 className="text-title-24 text-brand-text">INCIDENCIA #INC-310</h2>
+          <p className="text-text-12 font-normal text-brand-text mt-1">Cinta no arranca correctamente</p>
         </div>
         <button
           className="text-brand-text hover:text-brand-black transition-colors"
@@ -101,106 +101,79 @@ export const ProductEditSidebar: React.FC<ProductEditSidebarProps> = ({ onClose,
         </button>
       </div>
 
-      <Card className="space-y-3">
-        <div className="grid grid-cols-2 gap-3 text-xs">
-          <div>
-            <p className="text-brand-text mb-1">Sala</p>
-            <p className="text-brand-black font-medium">Técnico</p>
-          </div>
+      <Card className="space-y-3 bg-brand-sectionBg border border-brand-border shadow-none">
+        <div className="grid grid-cols-2 gap-3">
+          <p className="text-right text-[14px] leading-5 font-normal text-brand-text">Sala Fitness</p>
+        </div>
+        <div className="grid grid-cols-2 gap-3">
+          <p className="text-text-12 font-semibold text-brand-textStrong">Técnico</p>
           <div className="text-right">
-            <p className="text-brand-text mb-1">Sala Privada</p>
-            <Badge variant="danger">Crítico</Badge>
+            <span className="px-2 py-0.5 rounded text-[12px] font-normal" style={{ backgroundColor: 'rgba(255, 0, 0, 0.2)', color: '#FF0000' }}>Crítica</span>
           </div>
         </div>
-        <div className="grid grid-cols-2 gap-3 text-xs">
-          <div>
-            <p className="text-brand-text mb-1">SLA</p>
-            <p className="text-brand-black font-medium">8 h</p>
-          </div>
+        <div className="grid grid-cols-2 gap-3">
+          <p className="text-text-12 font-semibold text-brand-textStrong">SLA</p>
           <div className="text-right">
-            <p className="text-brand-text mb-1">Estado</p>
-            <Badge variant={statusVariant}>{status}</Badge>
+            <span className="px-2 py-0.5 rounded text-[12px] font-normal" style={{ backgroundColor: 'rgba(234, 88, 12, 0.2)', color: '#EA580C' }}>En progreso</span>
           </div>
         </div>
       </Card>
 
       <Section title="Descripción">
-        <p className="text-xs leading-relaxed text-brand-text">
-          El monitor reporta que la clínica NordiTrack 03 no enciende desde ayer. Al encender, muestra un pitido y pantalla negra. Posible falla eléctrica o fusible interno.
-        </p>
+        <div className="rounded-xl border border-brand-soft bg-[#FFFFFF] p-4">
+          <p className="text-text-12 font-normal leading-relaxed text-brand-text">
+            El monitor reporta que la clínica NordiTrack 03 no enciende desde ayer. Al encender, muestra un pitido y pantalla negra. Posible falla eléctrica o fusible interno.
+          </p>
+        </div>
       </Section>
 
       <Section title="Responsable">
-        <div className="space-y-4 text-xs">
-          <div>
-            <p className="text-brand-text">Asignado a</p>
-            <p className="text-brand-black font-medium">{assignee}</p>
+        <div className="space-y-3">
+          <div className="grid grid-cols-[1fr_auto] gap-2 items-start">
+            <p className="text-text-12 font-semibold text-brand-textStrong">Asignado a</p>
+            <p className="text-[14px] leading-5 font-normal text-brand-text text-right">{assignee}</p>
           </div>
-          <div className="grid grid-cols-2 gap-2">
-            <label className="text-brand-text">
-              Estado
-              <select
-                value={status}
-                onChange={(event) => setStatus(event.target.value as IncidentStatus)}
-                className="mt-1 w-full rounded-md border border-brand-soft bg-brand-white px-2 py-1.5 text-xs text-brand-black outline-none focus:border-brand-toggle"
-              >
-                {STATUS_OPTIONS.map((option) => (
-                  <option key={option} value={option}>{option}</option>
-                ))}
-              </select>
-            </label>
-            <label className="text-brand-text">
-              Reasignar a
-              <select
-                value={assignee}
-                onChange={(event) => setAssignee(event.target.value)}
-                className="mt-1 w-full rounded-md border border-brand-soft bg-brand-white px-2 py-1.5 text-xs text-brand-black outline-none focus:border-brand-toggle"
-              >
-                {TECHNICIAN_OPTIONS.map((option) => (
-                  <option key={option} value={option}>{option}</option>
-                ))}
-              </select>
-            </label>
+          <div className="grid grid-cols-[1fr_auto] gap-2 items-start">
+            <p className="text-text-12 font-semibold text-brand-textStrong">Fecha de creación</p>
+            <p className="text-[14px] leading-5 font-normal text-brand-text text-right">10/10/2025 - 09:43</p>
           </div>
-          <div className="grid grid-cols-2 gap-2">
-            <div>
-              <p className="text-brand-text">Fecha de creación</p>
-              <p className="text-brand-black">10/10/2025 - 09:41</p>
-            </div>
-            <div>
-              <p className="text-brand-text">Fecha límite según SLA</p>
-              <p className="text-brand-black">11/10/2025 - 17:00</p>
-            </div>
+          <div className="grid grid-cols-[1fr_auto] gap-2 items-start">
+            <p className="text-text-12 font-semibold text-brand-textStrong">Fecha límite según SLA</p>
+            <p className="text-[14px] leading-5 font-normal text-brand-text text-right">11/10/2025 - 17:00</p>
+          </div>
+          <div className="grid grid-cols-[1fr_auto] gap-2 items-start">
+            <p className="text-text-12 font-semibold text-brand-textStrong">Última actualización</p>
+            <p className="text-[14px] leading-5 font-normal text-brand-text text-right">11/10/2025 - 10:15</p>
           </div>
         </div>
       </Section>
 
       <Section title="Comentarios">
-        <div className="space-y-3 text-xs">
-          <div className="border-b border-brand-soft pb-3">
-            <div className="flex items-center justify-between text-brand-text">
-              <span>Maria Gómez (Recepción)</span>
-              <span>14/10/2025 - 09:45</span>
+        <div className="space-y-3 text-text-12 rounded-xl border border-brand-soft bg-[#EDEDED] p-4">
+          <div className="pb-2">
+            <div className="flex items-center justify-between text-text-12 font-semibold text-brand-textStrong">
+              <span>Marta Gómez (Recepción)</span>
+              <span className="text-[14px] leading-5 font-normal text-brand-text text-right">10/10/2025 - 09:45</span>
             </div>
-            <p className="text-brand-black mt-1">“Reporto incidencia y solicito que la cita no se reprograme”.</p>
+            <p className="text-brand-text mt-1 font-normal bg-[#F5F6F8] rounded-md px-3 py-2">"Reporto incidencia tras ver que la cinta no responde."</p>
           </div>
-          <div className="border-b border-brand-soft pb-3">
-            <div className="flex items-center justify-between text-brand-text">
+          <div className="pb-2">
+            <div className="flex items-center justify-between text-text-12 font-semibold text-brand-textStrong">
               <span>Juan Pérez (Técnico)</span>
-              <span>14/10/2025 - 11:20</span>
+              <span className="text-[14px] leading-5 font-normal text-brand-text text-right">10/10/2025 - 11:00</span>
             </div>
-            <p className="text-brand-black mt-1">“Comprobando alimentación y fusible. Solicito repuesto motor interno”.</p>
+            <p className="text-brand-text mt-1 font-normal bg-[#F5F6F8] rounded-md px-3 py-2">"Comprobando alimentación y fusible. Solicito repuesto motor interno."</p>
           </div>
           <div>
-            <div className="flex items-center justify-between text-brand-text">
-              <span>María Gómez</span>
-              <span>15/10/2025 - 11:15</span>
+            <div className="flex items-center justify-between text-text-12 font-semibold text-brand-textStrong">
+              <span>Marta Gómez</span>
+              <span className="text-[14px] leading-5 font-normal text-brand-text text-right">10/10/2025 - 11:15</span>
             </div>
-            <p className="text-brand-black mt-1">“Gracias Juan, deja aviso si necesitan cortar el suministro”.</p>
+            <p className="text-brand-text mt-1 font-normal bg-[#F5F6F8] rounded-md px-3 py-2">"Gracias Juan, deja aviso si necesitas cortar el suministro."</p>
           </div>
           <textarea
             placeholder="Escribe un comentario..."
-            className="w-full bg-brand-white border border-brand-soft rounded-md px-3 py-2 text-xs text-brand-black placeholder:text-brand-text outline-none focus:border-brand-toggle resize-none"
+            className="w-full bg-[#FFFFFF] border border-brand-soft rounded-md px-3 py-2 text-text-12 font-normal text-brand-text placeholder:text-brand-text outline-none focus:border-brand-toggle resize-none"
             rows={3}
           />
         </div>
@@ -222,8 +195,8 @@ export const ProductEditSidebar: React.FC<ProductEditSidebarProps> = ({ onClose,
             className="w-full border border-brand-soft rounded-lg py-4 px-3 bg-brand-white hover:bg-brand-surface transition-colors text-center"
           >
             <Upload size={18} className="mx-auto text-brand-text" />
-            <p className="text-[11px] text-brand-text mt-2">Arrastra imágenes aquí o</p>
-            <p className="text-[11px] text-brand-toggle mt-0.5">busca archivos</p>
+            <p className="text-[14px] leading-5 font-normal text-brand-text mt-2">Arrastra imágenes aquí o</p>
+            <p className="text-[14px] leading-5 font-medium text-[#15B4E9]">busca archivos</p>
           </button>
           <div className="grid grid-cols-4 gap-2">
             {mediaItems.slice(0, 2).map((item) => (
@@ -248,44 +221,77 @@ export const ProductEditSidebar: React.FC<ProductEditSidebarProps> = ({ onClose,
               <Plus size={14} />
             </button>
           </div>
-          <div className="text-center text-[11px] text-brand-text border border-brand-soft rounded-md py-2">Subir video (máx. 30s)</div>
+          <p className="text-text-12 font-semibold text-brand-textStrong">Video corto</p>
+          <button
+            type="button"
+            className="w-full border border-brand-soft rounded-lg py-3 px-3 bg-brand-white hover:bg-brand-surface transition-colors flex items-center justify-center gap-2"
+          >
+            <Video size={14} className="text-brand-text" />
+            <span className="text-[14px] leading-5 font-medium text-brand-text">Subir video (máx. 30s)</span>
+          </button>
         </div>
       </Section>
 
       <Section title="Historial de cambios">
-        <div className="space-y-2 text-[11px]">
-          <div className="grid grid-cols-[90px_1fr_80px] gap-2 text-brand-text uppercase tracking-wide">
+        <div className="rounded-xl border border-brand-soft bg-[#FFFFFF] overflow-hidden">
+          <div className="grid grid-cols-[1.3fr_1.6fr_1fr_auto] gap-3 px-3 py-3 text-[12px] leading-4 font-semibold text-[#111111]">
             <span>Fecha</span>
             <span>Acción</span>
             <span>Usuario</span>
+            <span></span>
           </div>
-          <div className="grid grid-cols-[90px_1fr_80px] gap-2 text-brand-black">
-            <span>10/10/2025</span>
+          <div className="grid grid-cols-[1.3fr_1.6fr_1fr_auto] gap-3 px-3 py-3 text-[12px] leading-5 font-normal text-[#666666] border-t border-brand-soft">
+            <span>10/10/2025 09:43</span>
             <span>Creación de incidencia</span>
-            <span>María</span>
+            <span>Marta Gómez</span>
+            <span className="font-semibold text-[#444444]">...</span>
           </div>
-          <div className="grid grid-cols-[90px_1fr_80px] gap-2 text-brand-black">
-            <span>13/10/2025</span>
-            <span>Asignada a Juan P.</span>
+          <div className="grid grid-cols-[1.3fr_1.6fr_1fr_auto] gap-3 px-3 py-3 text-[12px] leading-5 font-normal text-[#666666] border-t border-brand-soft">
+            <span>10/10/2025 09:43</span>
+            <span>Asignada a Juan Pérez</span>
             <span>Sistema</span>
+            <span className="font-semibold text-[#444444]">...</span>
           </div>
-          <div className="grid grid-cols-[90px_1fr_80px] gap-2 text-brand-black">
-            <span>14/10/2025</span>
-            <span>Estado: En progreso</span>
-            <span>Juan</span>
+          <div className="grid grid-cols-[1.3fr_1.6fr_1fr_auto] gap-3 px-3 py-3 text-[12px] leading-5 font-normal text-[#666666] border-t border-brand-soft">
+            <span>10/10/2025 09:43</span>
+            <span>Estado → En progreso</span>
+            <span>Juan Pérez</span>
+            <span className="font-semibold text-[#444444]">...</span>
           </div>
-          <div className="grid grid-cols-[90px_1fr_80px] gap-2 text-brand-black">
-            <span>15/10/2025</span>
+          <div className="grid grid-cols-[1.3fr_1.6fr_1fr_auto] gap-3 px-3 py-3 text-[12px] leading-5 font-normal text-[#666666] border-t border-brand-soft">
+            <span>10/10/2025 09:43</span>
             <span>Comentario añadido</span>
-            <span>María</span>
+            <span>Sistema</span>
+            <span className="font-semibold text-[#444444]">...</span>
           </div>
         </div>
       </Section>
 
-      <div className="flex gap-2 pt-1">
-        <Button variant="secondary" className="flex-1" onClick={handleChangeStatus}>Cambiar estado</Button>
-        <Button variant="secondary" className="flex-1" onClick={handleReassign}>Reasignar</Button>
-        <Button variant="primary" className="flex-1" onClick={onAdvance}>Cerrar incidencia</Button>
+      <div className="rounded-2xl bg-[#EDEDED] p-3 flex gap-2 items-center">
+        <Button
+          variant="secondary"
+          size="sm"
+          className="!rounded-lg !px-4 !py-1.5 !text-[14px] !leading-5 !font-medium !bg-[#FFFFFF] !border !border-[#C0C0C0] !text-[#666666] hover:!bg-[#F5F5F5] !shadow-none"
+          onClick={handleChangeStatus}
+        >
+          Cambiar estado
+        </Button>
+        <Button
+          variant="secondary"
+          size="sm"
+          className="!rounded-lg !px-4 !py-1.5 !text-[14px] !leading-5 !font-medium !bg-[#FFFFFF] !border !border-[#C0C0C0] !text-[#666666] hover:!bg-[#F5F5F5] !shadow-none"
+          onClick={handleReassign}
+        >
+          Reasignar
+        </Button>
+        <Button
+          variant="primary"
+          size="sm"
+          className="!rounded-lg !px-4 !py-1.5 !text-[14px] !leading-5 !font-medium !bg-gradient-to-r !from-[#FF56B0] !to-[#8C4787] !border-0 !text-[#FFFFFF] hover:!opacity-95 !shadow-none"
+          onClick={onAdvance}
+        >
+          Cerrar incidencia
+        </Button>
       </div>
     </div>
   )

@@ -2,7 +2,7 @@
 
 import React from 'react'
 import Image from 'next/image'
-import { ChevronDown, X } from 'lucide-react'
+import { ChevronDown, ChevronUp, X } from 'lucide-react'
 import { Button, Card } from '@/src/components/common'
 
 interface MemberProfileSidebarProps {
@@ -19,19 +19,18 @@ const Toggle: React.FC<{ enabled?: boolean }> = ({ enabled = true }) => {
 }
 
 const Row: React.FC<{ label: string; value: string }> = ({ label, value }) => (
-  <div className="grid grid-cols-[1fr_auto] gap-2 text-xs">
-    <p className="text-gray-500">{label}</p>
-    <p className="text-gray-300 text-right">{value}</p>
+  <div className="grid grid-cols-[1fr_auto] gap-2">
+    <p className="text-label-14 text-brand-textStrong">{label}</p>
+    <p className="text-[16px] leading-6 font-normal text-brand-text text-right">{value}</p>
   </div>
 )
 
 export const MemberProfileSidebar: React.FC<MemberProfileSidebarProps> = ({ onClose, onComplete }) => {
   return (
-    <div className="w-full max-w-[1200px] rounded-2xl bg-dark-800 border border-dark-700 p-6 space-y-4">
-      <div className="flex items-center justify-between">
-        <h2 className="text-sm font-semibold text-gray-100">Perfil del miembro</h2>
+    <div className="w-full max-w-[1200px] rounded-2xl bg-brand-sidebarBg border border-brand-border p-6 space-y-4">
+      <div className="flex items-center justify-end">
         <button
-          className="text-gray-500 hover:text-gray-300 transition-colors"
+          className="text-brand-text hover:text-brand-black transition-colors"
           aria-label="Cerrar sidebar"
           onClick={onClose}
         >
@@ -39,26 +38,25 @@ export const MemberProfileSidebar: React.FC<MemberProfileSidebarProps> = ({ onCl
         </button>
       </div>
 
-      <Card>
-        <div className="flex items-center gap-3">
-          <div className="w-12 h-12 rounded-full border border-dark-600 bg-dark-900 overflow-hidden">
-            <Image
-              src="/figma/asset-2.png"
-              alt="Foto del miembro"
-              width={48}
-              height={48}
-              className="w-full h-full object-cover"
-            />
-          </div>
-          <div className="flex items-center gap-3">
-            <p className="text-xs font-medium text-green-500">Activo</p>
-            <Toggle enabled />
-          </div>
+      <div className="flex items-center gap-4 px-1">
+        <div className="w-20 h-20 rounded-full border-2 border-brand-white overflow-hidden">
+          <Image
+            src="/figma/asset-2.png"
+            alt="Foto del miembro"
+            width={80}
+            height={80}
+            className="w-full h-full object-cover"
+          />
         </div>
-      </Card>
+        <div className="flex items-center gap-3">
+          <p className="text-[14px] leading-5 font-semibold text-brand-success">Activo</p>
+          <Toggle enabled />
+        </div>
+      </div>
 
-      <Card className="space-y-3">
-        <h3 className="text-lg font-semibold text-white">Pablo Victor</h3>
+      <Card className="space-y-3 bg-brand-sectionBg border border-brand-border shadow-none">
+        <h3 className="text-[20px] leading-7 font-semibold text-brand-textStrong">Pablo Victor</h3>
+        <div className="h-px bg-brand-soft" />
         <div className="space-y-2">
           <Row label="Filial/centro habitual" value="Reparto" />
           <Row label="E-mail" value="usuariodeprueb@gmail.com" />
@@ -70,19 +68,24 @@ export const MemberProfileSidebar: React.FC<MemberProfileSidebarProps> = ({ onCl
         </div>
       </Card>
 
-      <Card className="space-y-3">
-        <h3 className="text-base font-semibold text-white">Etiquetas</h3>
+      <Card className="space-y-3 bg-brand-sectionBg border border-brand-border shadow-none">
+        <h3 className="text-[20px] leading-7 font-semibold text-brand-textStrong">Etiquetas</h3>
         <div className="space-y-2">
-          <div className="h-px bg-dark-700" />
-          <p className="text-xs text-gray-500">Cliente</p>
-          <button className="w-full h-8 border border-dark-700 rounded-md bg-dark-900 px-2 text-xs text-gray-300 flex items-center justify-between">
+          <div className="h-px bg-brand-soft" />
+          <p className="text-label-14 text-brand-textStrong">Cliente</p>
+          <button className="w-full h-10 border border-brand-soft rounded-md bg-brand-white px-3 text-[16px] leading-6 font-normal text-brand-text flex items-center justify-between">
             <span>Prueba</span>
-            <ChevronDown size={12} className="text-gray-500" />
+            <span className="flex flex-col leading-none text-brand-text">
+              <ChevronUp size={12} />
+              <ChevronDown size={12} />
+            </span>
           </button>
         </div>
       </Card>
 
-      <Button variant="primary" className="w-full" onClick={onComplete}>Finalizar flujo</Button>
+      <div className="rounded-xl border border-brand-border bg-brand-white p-3">
+        <Button variant="primary" size="lg" className="w-full" onClick={onComplete}>Finalizar flujo</Button>
+      </div>
     </div>
   )
 }
