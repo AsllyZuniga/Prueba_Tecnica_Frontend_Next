@@ -31,7 +31,7 @@ export const Button: React.FC<ButtonProps> = ({
     primary: 'bg-primary-600 hover:bg-primary-700 text-white disabled:bg-dark-600',
     secondary: 'bg-dark-700 hover:bg-dark-600 text-gray-100 border border-dark-600',
     ghost: 'hover:bg-dark-700 text-gray-100',
-    danger: 'bg-red-500 hover:bg-red-600 text-white disabled:bg-dark-600',
+    danger: 'bg-dark-700 hover:bg-dark-600 text-white disabled:bg-dark-600',
   }
 
   const sizeClasses = {

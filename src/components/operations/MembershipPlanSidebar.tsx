@@ -6,12 +6,12 @@ import { Button, Card, Input, Select, Textarea } from '@/src/components/common'
 
 const Section: React.FC<{ title: string; children: React.ReactNode }> = ({ title, children }) => {
   return (
-    <Card className="p-0 overflow-hidden">
-      <div className="px-4 py-3 border-b border-dark-700 flex items-center justify-between">
-        <h3 className="text-xs font-semibold tracking-wide text-gray-300">{title}</h3>
+    <Card className="p-0 overflow-hidden rounded-xl bg-dark-700/40">
+      <div className="px-5 py-3.5 bg-dark-700/60 flex items-center justify-between">
+        <h3 className="text-xs font-semibold tracking-wide text-gray-200">{title}</h3>
         <ChevronDown size={14} className="text-gray-500" />
       </div>
-      <div className="p-4">{children}</div>
+      <div className="p-5 bg-dark-800/50">{children}</div>
     </Card>
   )
 }

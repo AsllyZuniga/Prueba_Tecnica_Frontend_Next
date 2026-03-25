@@ -43,13 +43,13 @@ export const SidebarContainer: React.FC<SidebarContainerProps> = ({ onClose, onC
         </div>
       </Card>
 
-      <Card className="p-0 overflow-hidden">
-        <div className="px-4 py-3 border-b border-dark-700 flex items-center justify-between">
+      <Card className="p-0 overflow-hidden rounded-xl bg-dark-700/40">
+        <div className="px-5 py-3.5 bg-dark-700/60 flex items-center justify-between">
           <h3 className="text-xs font-semibold tracking-wide text-gray-300 uppercase">Listado de zonas con inasistencia</h3>
           <ChevronDown size={14} className="text-gray-500" />
         </div>
 
-        <div className="p-4 pt-3 space-y-3">
+        <div className="p-5 pt-4 space-y-3 bg-dark-800/50">
           <div className="grid grid-cols-[70px_1fr_70px_70px] gap-2 text-[10px] text-gray-500 uppercase tracking-wide">
             <span>Zona</span>
             <span>Categoría</span>
@@ -60,14 +60,14 @@ export const SidebarContainer: React.FC<SidebarContainerProps> = ({ onClose, onC
           <div className="grid grid-cols-[70px_1fr_70px_70px] gap-2 text-xs text-gray-300 items-center">
             <span>GH-01</span>
             <span className="truncate">Fuerza</span>
-            <span><Badge variant="danger" className="bg-red-600 text-white">Falta</Badge></span>
+            <span><Badge variant="danger" className="bg-rose-600 text-white">Falta</Badge></span>
             <span>12/02/2025</span>
           </div>
 
           <div className="grid grid-cols-[70px_1fr_70px_70px] gap-2 text-xs text-gray-300 items-center">
             <span>GH-02</span>
             <span className="truncate">Cardio</span>
-            <span><Badge variant="warning" className="bg-amber-600 text-white">Alerta</Badge></span>
+            <span><Badge variant="warning" className="bg-amber-500 text-white">Alerta</Badge></span>
             <span>11/02/2025</span>
           </div>
 

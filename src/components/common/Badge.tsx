@@ -10,8 +10,8 @@ export const Badge: React.FC<BadgeProps> = ({ children, variant = 'default', cla
   const variantClasses = {
     default: 'bg-dark-700 text-gray-200',
     success: 'bg-emerald-900 text-emerald-100',
-    warning: 'bg-amber-900 text-amber-100',
-    danger: 'bg-red-900 text-red-100',
+    warning: 'bg-amber-500 text-white',
+    danger: 'bg-rose-600 text-white',
     info: 'bg-primary-900 text-primary-100',
   }
 

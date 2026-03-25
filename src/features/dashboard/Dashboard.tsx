@@ -147,12 +147,12 @@ export const Dashboard: React.FC = () => {
 
   return (
     <div className="min-h-full space-y-4 relative">
-      <Card className="space-y-1">
+      <Card className="space-y-1 bg-dark-700/60">
         <h1 className="text-2xl font-semibold text-white">TestNext · Operaciones</h1>
         <p className="text-sm text-gray-400">Gestiona incidencias y membresías desde el menú lateral.</p>
       </Card>
 
-      <Card className="min-h-[700px]">
+      <Card className="min-h-[700px] bg-dark-700/45">
         {!isOpen && (
           <div className="h-full min-h-[668px] p-4 md:p-6">
             <div className="w-full max-w-[1200px] mx-auto space-y-4">
@@ -176,17 +176,17 @@ export const Dashboard: React.FC = () => {
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-                <Card className="space-y-2">
+                <Card className="space-y-2 bg-dark-900/45 shadow-none">
                   <p className="text-xs text-gray-500 uppercase tracking-wide">Incidencias abiertas</p>
                   <p className="text-3xl font-semibold text-white">12</p>
                   <p className="text-xs text-gray-400">3 críticas · 5 en progreso · 4 en revisión</p>
                 </Card>
-                <Card className="space-y-2">
+                <Card className="space-y-2 bg-dark-900/45 shadow-none">
                   <p className="text-xs text-gray-500 uppercase tracking-wide">Órdenes de trabajo</p>
                   <p className="text-3xl font-semibold text-white">7</p>
                   <p className="text-xs text-gray-400">2 por vencer SLA en las próximas 6 horas</p>
                 </Card>
-                <Card className="space-y-2">
+                <Card className="space-y-2 bg-dark-900/45 shadow-none">
                   <p className="text-xs text-gray-500 uppercase tracking-wide">Membresías pendientes</p>
                   <p className="text-3xl font-semibold text-white">5</p>
                   <p className="text-xs text-gray-400">2 altas nuevas · 3 renovaciones</p>
@@ -194,20 +194,20 @@ export const Dashboard: React.FC = () => {
               </div>
 
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
-                <Card className="space-y-3">
+                <Card className="space-y-3 bg-dark-900/35 shadow-none">
                   <div className="flex items-center justify-between">
                     <p className="text-sm font-semibold text-white">Accesos rápidos</p>
                     <p className="text-xs text-gray-500">Ejecución directa</p>
                   </div>
                   <div className="space-y-2">
-                    <div className="flex items-center justify-between rounded-lg border border-dark-700 px-3 py-2">
+                    <div className="flex items-center justify-between rounded-lg bg-dark-800/70 border border-dark-600/70 px-3 py-2">
                       <div>
                         <p className="text-sm text-gray-200">Flujo de incidencias</p>
                         <p className="text-xs text-gray-500">Sala → Incidencia → Orden de trabajo</p>
                       </div>
                       <Button variant="primary" size="sm" onClick={() => startFlowFromHome('incident')}>Iniciar</Button>
                     </div>
-                    <div className="flex items-center justify-between rounded-lg border border-dark-700 px-3 py-2">
+                    <div className="flex items-center justify-between rounded-lg bg-dark-800/70 border border-dark-600/70 px-3 py-2">
                       <div>
                         <p className="text-sm text-gray-200">Flujo de membresías</p>
                         <p className="text-xs text-gray-500">Plan → Perfil del miembro</p>
@@ -217,27 +217,27 @@ export const Dashboard: React.FC = () => {
                   </div>
                 </Card>
 
-                <Card className="space-y-3">
+                <Card className="space-y-3 bg-dark-900/35 shadow-none">
                   <div className="flex items-center justify-between">
                     <p className="text-sm font-semibold text-white">Actividad reciente</p>
                     <p className="text-xs text-gray-500">Últimos eventos</p>
                   </div>
                   <div className="space-y-2 text-sm">
-                    <div className="rounded-lg border border-dark-700 px-3 py-2 flex items-start justify-between gap-3">
+                    <div className="rounded-lg bg-dark-800/70 border border-dark-600/70 px-3 py-2 flex items-start justify-between gap-3">
                       <div>
                         <p className="text-gray-200">INC-310 actualizada a En progreso</p>
                         <p className="text-xs text-gray-500">Juan Pérez · hace 12 min</p>
                       </div>
                       <span className="text-xs text-primary-500">Incidencia</span>
                     </div>
-                    <div className="rounded-lg border border-dark-700 px-3 py-2 flex items-start justify-between gap-3">
+                    <div className="rounded-lg bg-dark-800/70 border border-dark-600/70 px-3 py-2 flex items-start justify-between gap-3">
                       <div>
                         <p className="text-gray-200">OT-204 con evidencia cargada</p>
                         <p className="text-xs text-gray-500">Sistema · hace 24 min</p>
                       </div>
                       <span className="text-xs text-primary-500">OT</span>
                     </div>
-                    <div className="rounded-lg border border-dark-700 px-3 py-2 flex items-start justify-between gap-3">
+                    <div className="rounded-lg bg-dark-800/70 border border-dark-600/70 px-3 py-2 flex items-start justify-between gap-3">
                       <div>
                         <p className="text-gray-200">Plan mensual creado para nuevo miembro</p>
                         <p className="text-xs text-gray-500">Recepción · hace 42 min</p>

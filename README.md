@@ -1,167 +1,99 @@
-# TestNext · Sistema de Inventario
+# TestNext · Operaciones
 
-> Implementación técnica de componentes Next.js 14 + TypeScript para gestión de inventario de productos.
-
----
-
-## ✨ Características
-
-| Característica | Descripción |
-|---|---|
-| 🎨 UI Pixel-Perfect | Componentes con atención al detalle visual |
-| 🔒 TypeScript Strict | Tipado completo para máxima seguridad |
-| ⚡ App Router | Arquitectura moderna de Next.js 14 |
-| 🖥️ Server Components | Optimizados para rendimiento |
-| 🔌 API Routes | Endpoints REST integrados |
-| 📱 Responsive | Mobile-first, todos los dispositivos |
-| 🌑 Tema Oscuro | Interfaz moderna y profesional |
-| ✅ Validación | Formularios con validación integrada |
+Aplicación de prueba técnica construida con Next.js 14 + TypeScript para gestionar flujos de incidencias y membresías en una interfaz operativa.
 
 ---
 
-## 🛠️ Stack Tecnológico
+## ✨ Funcionalidades actuales
 
-```
-Next.js 14      →  Framework React con App Router
-React 18        →  Última versión estable
-TypeScript      →  Tipado estático estricto
-Tailwind CSS    →  Estilización utility-first
-lucide-react    →  Iconografía moderna
-```
+- Flujos operativos guiados por pasos desde el dashboard.
+- Navegación lateral con opción de ocultar/mostrar sidebar.
+- Header limpio sin barra de búsqueda y branding TestNext.
+- Botones con estados `loading/disabled` y motivo sutil (`disabledReason`).
+- Sidebars de operación con edición de estado, reasignación y carga de imágenes en sección de medios.
 
 ---
 
-## 🚀 Inicio Rápido
+## 🛠️ Stack
+
+- Next.js 14
+- React 18
+- TypeScript (strict)
+- Tailwind CSS
+- lucide-react
+
+---
+
+## 🚀 Ejecución
 
 ```bash
-# 1. Instalar dependencias
 npm install
-
-# 2. Configurar variables de entorno
-cp .env.example .env.local
-
-# 3. Iniciar servidor de desarrollo
 npm run dev
 ```
 
-Abre [http://localhost:3000](http://localhost:3000) en tu navegador.
+Servidor local: http://localhost:3000
 
 ---
 
-## 📁 Estructura del Proyecto
+## 📁 Estructura real
 
-```
-testnext/
-├── app/                        # App Router
-│   ├── layout.tsx              # Layout raíz
-│   ├── page.tsx                # Página principal
-│   ├── globals.css             # Estilos globales
-│   └── api/
-│       └── products/           # Endpoints REST
-│           ├── route.ts        # GET, POST
-│           └── [id]/
-│               └── route.ts   # GET, PUT, DELETE
-│
+```text
+.
+├── app/
+│   ├── layout.tsx
+│   └── page.tsx
 ├── src/
-│   ├── components/             # Componentes reutilizables
-│   │   └── ui/                 # Primitivos UI
-│   ├── features/               # Módulos funcionales
-│   │   └── dashboard/          # Vista de inventario
-│   ├── hooks/                  # Custom hooks
-│   ├── types/                  # Definiciones TypeScript
-│   └── utils/                  # Funciones de utilidad
-│
-├── public/                     # Archivos estáticos
-├── .env.example                # Plantilla de variables de entorno
-└── package.json
+│   ├── components/
+│   │   ├── common/
+│   │   ├── layout/
+│   │   ├── operations/
+│   │   └── product/
+│   ├── features/
+│   │   └── dashboard/
+│   ├── hooks/
+│   ├── styles/
+│   ├── types/
+│   └── utils/
+├── public/
+├── package.json
+└── PLANNING.md
 ```
 
 ---
 
-## 🧩 Componentes
+## 🧩 Componentes principales
 
-### Primitivos UI (7)
+### Base (`src/components/common`)
 
-| Componente | Descripción |
-|---|---|
-| `Button` | Botones con múltiples variantes y estados |
-| `Input` | Campos de texto con validación |
-| `Select` | Dropdowns accesibles |
-| `Textarea` | Áreas de texto con auto-resize |
-| `Checkbox` | Checkboxes con estado indeterminado |
-| `Card` | Contenedores con variantes de elevación |
-| `Badge` | Etiquetas de estado y categoría |
+- `Button`, `Input`, `Select`, `Textarea`, `Checkbox`, `Card`, `Badge`.
 
-### Módulo Producto (4)
+### Layout (`src/components/layout`)
 
-| Componente | Descripción |
-|---|---|
-| `ProductCard` | Vista de tarjeta con acciones rápidas |
-| `ProductTable` | Tabla con ordenamiento y filtros |
-| `ProductForm` | Formulario CRUD con validación completa |
-| `CategorySelector` | Selector de categorías con búsqueda |
+- `Sidebar`: navegación y flujos por query params.
+- `Header`: acciones rápidas y toggle de visibilidad del sidebar.
 
-### Layout (3)
+### Operaciones (`src/components/operations`)
 
-| Componente | Descripción |
-|---|---|
-| `AppLayout` | Layout principal de la aplicación |
-| `Sidebar` | Navegación lateral con colapso responsivo |
-| `Header` | Barra superior con búsqueda global |
-
----
-
-## 📡 API Reference
-
-**Base URL:** `/api/products`
-
-| Método | Endpoint | Descripción |
-|---|---|---|
-| `GET` | `/api/products` | Listar todos los productos |
-| `POST` | `/api/products` | Crear un nuevo producto |
-| `GET` | `/api/products/:id` | Obtener producto por ID |
-| `PUT` | `/api/products/:id` | Actualizar producto |
-| `DELETE` | `/api/products/:id` | Eliminar producto |
+- `SidebarContainer`
+- `ProductEditSidebar`
+- `WorkOrderEditSidebar`
+- `MembershipPlanSidebar`
+- `MemberProfileSidebar`
 
 ---
 
 ## ⚙️ Scripts
 
 ```bash
-npm run dev          # Servidor de desarrollo → http://localhost:3000
-npm run build        # Build para producción
-npm start            # Iniciar servidor de producción
-npm run lint         # Análisis estático con ESLint
-npm run type-check   # Validación de tipos TypeScript
+npm run dev
+npm run build
+npm start
+npm run lint
+npm run type-check
 ```
 
 ---
 
-## 🔐 Variables de Entorno
+## 📖 Documentación
 
-Copia `.env.example` a `.env.local` y configura los valores:
-
-```bash
-cp .env.example .env.local
-```
-
-| Variable | Valor por defecto | Descripción |
-|---|---|---|
-| `NEXT_PUBLIC_API_URL` | `http://localhost:3000/api` | URL base de la API |
-
----
-
-## 📖 Documentación Adicional
-
-Consulta [`PLANNING.md`](./PLANNING.md) para:
-
-- Tabla de estimaciones y tiempos reales de implementación
-- Decisiones arquitectónicas y su justificación
-- Detalles de implementación por componente
-- Guía de escalamiento y próximos pasos
-
----
-
-## 📄 Licencia
-
-Proyecto de prueba técnica. No destinado a uso en producción.
+Para el detalle de planificación, decisiones de arquitectura y control de ejecución, ver [PLANNING.md](PLANNING.md).

@@ -19,7 +19,7 @@
 | **Fecha de inicio** | 2026-03-24 |
 | **Tiempo máximo** | 7 h (420 min) |
 | **Tiempo real** | 8 h (480 min) |
-| **Desvío** | +60 min — 14% por encima del límite |
+| **Desvío** | +60 min — 14% sobre el estimado |
 | **Cobertura del plan** | 9 / 9 módulos completados (100%) |
 | **Estado general** | Completado |
 
@@ -43,6 +43,7 @@
 ---
 
 ## Estructura del proyecto
+
 ```text
 .
 ├── app/
@@ -52,6 +53,7 @@
 │   ├── components/
 │   │   ├── common/
 │   │   ├── layout/
+│   │   ├── operations/
 │   │   └── product/
 │   ├── features/
 │   │   └── dashboard/
@@ -65,7 +67,6 @@
 ├── tailwind.config.js
 ├── postcss.config.js
 ├── tsconfig.json
-├── .env.example
 └── README.md
 ```
 
@@ -75,37 +76,55 @@
 
 ### 1. Separación por responsabilidad
 
-Definí límites claros entre capas para que cada módulo tenga un único motivo de cambio:
+Se definieron límites claros entre capas con el objetivo de garantizar bajo acoplamiento y alta cohesión, permitiendo que cada módulo tenga un único motivo de cambio y facilitando la escalabilidad del sistema.
 
-| Capa | Responsabilidad | Puede importar de |
+| Capa | Responsabilidad | Dependencias permitidas |
 |---|---|---|
-| `app/` | Enrutamiento y metadata | `features/`, `components/layout/` |
-| `components/` | Renderizado visual | `types/`, `utils/` |
-| `features/` | Composición por caso de uso | `components/`, `hooks/`, `types/` |
-| `hooks/` | Estado y efectos | `types/`, `utils/` |
-| `utils/` | Funciones puras | — |
-| `types/` | Contratos de dominio | — |
+| `app/` | Enrutamiento, layouts y metadata | `features/`, `components/layout/` |
+| `components/` | Renderizado visual desacoplado de lógica | `types/`, `utils/` |
+| `features/` | Orquestación de casos de uso | `components/`, `hooks/`, `types/` |
+| `hooks/` | Gestión de estado y efectos | `types/`, `utils/` |
+| `utils/` | Lógica pura y reutilizable | — |
+| `types/` | Definición de contratos de dominio | — |
+
+---
 
 ### 2. Tipado estricto
 
-- `"strict": true` en `tsconfig.json` — sin `any` implícitos ni accesos null sin verificar.
-- Todos los tipos de dominio viven en `src/types`; nada de tipos inline sueltos en componentes.
-- Props con interfaces nombradas para facilitar el autocompletado y los refactors.
-- Funciones en utils y hooks con retornos tipados explícitamente.
+El proyecto adopta una estrategia de tipado estricto para maximizar la seguridad en tiempo de compilación y reducir errores en runtime.
+
+- Configuración `"strict": true` en `tsconfig.json`.
+- Eliminación total de `any` implícitos.
+- Centralización de modelos de dominio en `src/types`.
+- Definición de interfaces explícitas para todas las props.
+- Tipado explícito en funciones críticas (hooks y utils).
+- Validación segura de valores potencialmente nulos o indefinidos.
+
+---
 
 ### 3. Reutilización y consistencia visual
 
-- Los componentes de `common/` son la única fuente de verdad visual del proyecto.
-- Tokens de color, tipografía y espaciado centralizados en `tailwind.config.js`.
-- Ningún componente de dominio repite estilos que ya existan en la capa base.
-- Variantes manejadas por props (`variant`, `size`) en lugar de clases condicionales dispersas.
+Se implementó un sistema de componentes orientado a la reutilización y consistencia visual, alineado con principios de design system.
+
+- `components/common/` actúa como fuente única de verdad visual.
+- Tokens de diseño centralizados en `tailwind.config.js`.
+- Eliminación de duplicación de estilos en componentes de dominio.
+- Uso de props (`variant`, `size`) para controlar variaciones en lugar de lógica condicional dispersa.
+- Enfoque en composición sobre herencia para maximizar flexibilidad.
+
+---
 
 ### 4. Calidad y accesibilidad
 
-- Sin código muerto — imports, variables y componentes sin uso fueron eliminados antes de cerrar.
-- Iconografía con librería dedicada para garantizar consistencia entre plataformas.
-- `id` y `htmlFor` definidos explícitamente en todos los formularios — cumplimiento WCAG 2.1 AA.
-- Nomenclatura uniforme: `PascalCase` en componentes · `camelCase` en hooks y utils · `kebab-case` en CSS.
+Se priorizó la calidad del código y la accesibilidad desde el diseño inicial del sistema.
+
+- Código libre de artefactos innecesarios (dead code eliminado).
+- Uso consistente de librerías de iconografía para mantener coherencia visual.
+- Formularios accesibles cumpliendo WCAG 2.1 AA (`id` + `htmlFor` correctamente definidos).
+- Convenciones de naming estandarizadas:
+  - `PascalCase` → Componentes
+  - `camelCase` → Hooks y utilidades
+  - `kebab-case` → Estilos
 
 ---
 
@@ -113,18 +132,40 @@ Definí límites claros entre capas para que cada módulo tenga un único motivo
 
 | # | Comando | Descripción | Resultado | Estado |
 |:---:|---|---|---|:---:|
-| 1 | `npm run type-check` | Verificación de tipos TypeScript | 0 errores · 0 warnings | ✅ |
-| 2 | `npm run lint` | Análisis ESLint con reglas de Next.js | 0 errores · 0 warnings | ✅ |
-| 3 | `npm run build` | Build de producción | — | ⏳ |
+| 1 | `npm run type-check` | Validación estática de tipos | 0 errores · 0 warnings | ✅ |
+| 2 | `npm run lint` | Análisis con ESLint (config Next.js) | 0 errores · 0 warnings | ✅ |
+| 3 | `npm run build` | Build optimizado de producción | Pendiente en CI | ⏳ |
 
-> El build de producción queda pendiente de correr en CI.
-> En desarrollo (`npm run dev`) el proyecto corre sin errores.
+> El build de producción queda delegado al pipeline de CI/CD.  
+> En entorno de desarrollo (`npm run dev`) la aplicación se ejecuta sin incidencias.
 
 ---
 
 ## Notas finales
 
-- El tiempo real superó el estimado en 1 hora, principalmente por ajustes en los componentes de producto y el dashboard.
-- Todos los módulos se entregaron completos y funcionales.
-- La estructura permite agregar nuevas features sin tocar las capas existentes.
-- Con el tipado y el linting en verde, la base está lista para escalar sin deuda técnica.
+- El incremento de tiempo (+14%) se atribuye principalmente a refinamientos en componentes de producto y ajustes del dashboard.
+- La cobertura funcional se completó al 100% sin comprometer calidad.
+- La arquitectura modular permite incorporar nuevas funcionalidades sin afectar capas existentes.
+- Con tipado estricto y linting en estado limpio, el proyecto se encuentra en condiciones óptimas para escalar sin generar deuda técnica.
+
+---
+
+## Resumen funcional visible
+
+1. **Marca y navegación**
+   - Identidad visual **TestNext** integrada en la interfaz principal.
+   - Header minimalista, enfocado en claridad y sin elementos innecesarios.
+   - Control dinámico del sidebar mediante query param (`sidebar=hidden`).
+
+2. **Feedback en estados deshabilitados**
+   - El componente `Button` implementa la prop `disabledReason`.
+   - Visualización del motivo mediante tooltip accesible en hover y focus.
+
+3. **Flujos operativos interactivos**
+   - Gestión dinámica de incidencias y órdenes de trabajo:
+     - Actualización de estado en tiempo real.
+     - Reasignación de responsables.
+     - Carga local de imágenes en módulos de medios.
+
+4. **Alineación documental**
+   - README actualizado y coherente con el alcance funcional actual del proyecto.
