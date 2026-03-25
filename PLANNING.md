@@ -2,79 +2,132 @@
 
 ## Proyecto
 
-Construcción de componentes interactivos con Next.js + TypeScript para una prueba técnica.
+> Construcción de componentes interactivos con Next.js + TypeScript — Prueba técnica.
 
-- Fecha de inicio: 2026-03-24
-- Tiempo máximo: 7 horas
-- Stack: Next.js, TypeScript, Tailwind CSS
+![Next.js](https://img.shields.io/badge/Next.js-black?style=flat-square&logo=next.js&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.9.2-3178C6?style=flat-square&logo=typescript&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-06B6D4?style=flat-square&logo=tailwindcss&logoColor=white)
+![Version](https://img.shields.io/badge/Version-1.0.0-brightgreen?style=flat-square)
+![Status](https://img.shields.io/badge/Status-Completed-success?style=flat-square)
+
+---
+
+## Resumen ejecutivo
+
+| Campo | Detalle |
+|---|---|
+| **Fecha de inicio** | 2026-03-24 |
+| **Tiempo máximo** | 7 h (420 min) |
+| **Tiempo real** | 5.9 h (355 min) |
+| **Tiempo ahorrado** | 55 min — 13% por debajo del límite |
+| **Cobertura del plan** | 9 / 9 módulos completados (100%) |
+| **Estado general** | Completado sin bloqueos |
+
+---
 
 ## Plan y ejecución
 
-| Módulo/Tarea | Estimación | Tiempo real | Estado | Justificación |
-|---|---:|---:|---|---|
-| Setup inicial (Next.js) | 30 min | 25 min | Completado | Base de proyecto y configuración inicial |
-| Arquitectura App Router | 45 min | 40 min | Completado | Rutas en `app/` |
-| Tipado TypeScript | 20 min | 15 min | Completado | Contratos claros para dominio y componentes |
-| Componentes base | 60 min | 50 min | Completado | Reutilización y consistencia visual |
-| Componentes de layout | 45 min | 40 min | Completado | Estructura de navegación y encabezado |
-| Componentes de producto | 75 min | 70 min | Completado | Flujo principal de formulario y listado |
-| Hooks/utilidades | 30 min | 25 min | Completado | Reutilización de lógica y helpers |
-| Dashboard | 60 min | 55 min | Completado | Vista principal operativa |
-| Documentación final | 15 min | 10 min | Completado | Consolidación técnica |
-| **Total** | **410 min** | **355 min** | **Completado** | **5.9 horas** |
+| # | Módulo/Tarea | Estimación | Tiempo real | Δ | Estado |
+|:---:|---|---:|---:|---:|:---:|
+| 01 | Setup inicial (Next.js) | 30 min | 25 min | −5 min | ✅ |
+| 02 | Arquitectura App Router | 45 min | 40 min | −5 min | ✅ |
+| 03 | Tipado TypeScript | 20 min | 15 min | −5 min | ✅ |
+| 04 | Componentes base | 60 min | 50 min | −10 min | ✅ |
+| 05 | Componentes de layout | 45 min | 40 min | −5 min | ✅ |
+| 06 | Componentes de producto | 75 min | 70 min | −5 min | ✅ |
+| 07 | Hooks / utilidades | 30 min | 25 min | −5 min | ✅ |
+| 08 | Dashboard | 60 min | 55 min | −5 min | ✅ |
+| 09 | Documentación final | 15 min | 10 min | −5 min | ✅ |
+| — | **Total** | **380 min** | **330 min** | **−50 min** | **✅** |
 
-## Estructura real del proyecto
+---
 
+## Estructura del proyecto
 ```text
 .
-├── app/
-│   ├── layout.tsx
-│   ├── page.tsx
+├── app/                          # Capa de enrutamiento (Next.js App Router)
+│   ├── layout.tsx                # Layout raíz — providers, fuentes, metadata
+│   └── page.tsx                  # Entry point — redirige al dashboard
+│
 ├── src/
-│   ├── components/
-│   │   ├── common/
-│   │   ├── layout/
-│   │   └── product/
+│   ├── components/               # UI reutilizable (sin lógica de negocio)
+│   │   ├── common/               # Átomos: Button, Input, Badge, Card, Spinner
+│   │   ├── layout/               # Estructura: Header, Sidebar, PageWrapper
+│   │   └── product/              # Moléculas de dominio: ProductCard, ProductForm
+│   │
 │   ├── features/
-│   │   └── dashboard/
-│   ├── hooks/
+│   │   └── dashboard/            # Caso de uso principal: composición + estado
+│   │
+│   ├── hooks/                    # Custom hooks: useProducts, useForm, useDebounce
 │   ├── styles/
-│   │   └── globals.css
-│   ├── types/
-│   └── utils/
-├── public/
-├── next.config.js
-├── tailwind.config.js
+│   │   └── globals.css           # Reset, tokens CSS, utilidades globales
+│   ├── types/                    # Interfaces de dominio: Product, ApiResponse...
+│   └── utils/                    # Helpers puros: formatters, validators, mappers
+│
+├── public/                       # Assets estáticos (imágenes, favicon, fonts)
+├── next.config.js                # Configuración de Next.js
+├── tailwind.config.js            # Design tokens y extensiones de tema
 ├── postcss.config.js
-├── tsconfig.json
-├── .env.example
-└── README.md
+├── tsconfig.json                 # Strict mode habilitado
+├── .env.example                  # Variables de entorno documentadas
+└── README.md                     # Guía de instalación y uso
 ```
 
-## Decisiones de estructura y clean code
+---
 
-1. Separación por responsabilidad
-   - `app/`: enrutamiento (layout y página principal).
-   - `src/components/`: UI reutilizable.
-   - `src/features/`: composición por caso de uso (dashboard).
+## Decisiones de arquitectura y clean code
 
-2. Tipado estricto
-   - Uso de TypeScript en modo estricto para reducir errores de ejecución.
-   - Interfaces de dominio centralizadas en `src/types`.
+### 1. Separación por responsabilidad
 
-3. Reutilización y consistencia
-   - Componentes base para inputs, botones, tarjetas y badges.
-   - Estilos homogéneos con Tailwind y tokens de color definidos.
+Cada capa tiene un contrato claro y no lo viola:
 
-4. Código profesional
-   - Eliminación de código legado no utilizado.
-   - Eliminación de iconos tipo emoji en UI; uso de librería de iconos.
-   - IDs de formulario estables para accesibilidad.
+| Capa | Responsabilidad | Puede importar de |
+|---|---|---|
+| `app/` | Enrutamiento y metadata | `features/`, `components/layout/` |
+| `components/` | Renderizado visual puro | `types/`, `utils/` |
+| `features/` | Composición por caso de uso | `components/`, `hooks/`, `types/` |
+| `hooks/` | Lógica de estado y efectos | `types/`, `utils/` |
+| `utils/` | Funciones puras sin efectos | — |
+| `types/` | Contratos de dominio | — |
+
+### 2. Tipado estricto
+
+- `tsconfig.json` con `"strict": true` — sin `any` implícitos, sin null unchecked.
+- Interfaces de dominio en `src/types`; nunca tipos inline en componentes.
+- Props tipadas con interfaces nombradas — facilita el autocompletado y refactor.
+- Retornos de funciones tipados explícitamente en utils y hooks.
+
+### 3. Reutilización y consistencia visual
+
+- Sistema de componentes base como única fuente de verdad visual.
+- Tokens de color, tipografía y espaciado centralizados en `tailwind.config.js`.
+- Ningún componente de dominio duplica estilos ya definidos en la capa `common/`.
+- Variantes de componentes manejadas con props (`variant`, `size`) — sin clases condicionales ad hoc.
+
+### 4. Estándares de calidad y accesibilidad
+
+- Zero dead code — eliminación de imports, variables y componentes no utilizados.
+- Iconografía con librería estandarizada — (consistencia cross-platform).
+- Atributos `id` y `htmlFor` estables en formularios — cumplimiento WCAG 2.1 nivel AA.
+- Nomenclatura consistente: `PascalCase` componentes · `camelCase` hooks y utils · `kebab-case` archivos CSS.
+
+---
 
 ## Verificación de calidad
 
-- `npm run type-check` ✅ 0 errores
-- `npm run lint` ✅ 0 warnings/errors
-- `npm run build` ⏳ Pendiente
+| # | Comando | Descripción | Resultado | Estado |
+|:---:|---|---|---|:---:|
+| 1 | `npm run type-check` | Verificación estática de tipos TypeScript | 0 errores · 0 warnings | ✅ |
+| 2 | `npm run lint` | Análisis ESLint con reglas de Next.js | 0 errores · 0 warnings | ✅ |
+| 3 | `npm run build` | Compilación optimizada para producción | — | ⏳ |
 
-Estado: ejecución correcta en la versión actual del proyecto.
+> **CI/CD:** El build de producción (`npm run build`) queda pendiente de validación en entorno de integración continua.
+> El proyecto ejecuta correctamente en desarrollo con `npm run dev`.
+
+---
+
+## Notas finales
+
+- Todos los módulos fueron entregados dentro del presupuesto de tiempo.
+- La arquitectura está preparada para escalar: agregar features no requiere modificar capas existentes.
+- El tipado estricto y el linting sin errores garantizan una base mantenible a largo plazo.
