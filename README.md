@@ -1,116 +1,167 @@
-# TestNext - Sistema de Componentes Next.js
+# TestNext · Sistema de Inventario
 
-Implementación técnica de componentes Next.js 14 + TypeScript para gestión de inventario de productos.
+> Implementación técnica de componentes Next.js 14 + TypeScript para gestión de inventario de productos.
 
-## 🎯 Características Principales
+---
 
-- **UI Pixel-Perfect:** Componentes diseñados con atención al detalle visual
-- **TypeScript Strict:** Tipado completo para máxima seguridad
-- **Next.js 14 App Router:** Últimas características de Next.js
-- **Server Components:** Optimizados con Server Components donde sea posible
-- **API Routes:** Endpoints REST integrados
-- **Responsive Design:** Mobile-first, funciona en todos los dispositivos
-- **Tema Oscuro:** Interfaz moderna y profesional
-- **Validación Completa:** Formularios con validación integrada
+## ✨ Características
 
-## 📦 Stack Tecnológico
+| Característica | Descripción |
+|---|---|
+| 🎨 UI Pixel-Perfect | Componentes con atención al detalle visual |
+| 🔒 TypeScript Strict | Tipado completo para máxima seguridad |
+| ⚡ App Router | Arquitectura moderna de Next.js 14 |
+| 🖥️ Server Components | Optimizados para rendimiento |
+| 🔌 API Routes | Endpoints REST integrados |
+| 📱 Responsive | Mobile-first, todos los dispositivos |
+| 🌑 Tema Oscuro | Interfaz moderna y profesional |
+| ✅ Validación | Formularios con validación integrada |
 
-- **Next.js 14:** Framework React moderno
-- **React 18:** Última versión estable
-- **TypeScript:** Tipado estático
-- **Tailwind CSS:** Estilización utility-first
-- **lucide-react:** Iconos modernos
-- **App Router:** Última arquitectura de Next.js
+---
+
+## 🛠️ Stack Tecnológico
+
+```
+Next.js 14      →  Framework React con App Router
+React 18        →  Última versión estable
+TypeScript      →  Tipado estático estricto
+Tailwind CSS    →  Estilización utility-first
+lucide-react    →  Iconografía moderna
+```
+
+---
 
 ## 🚀 Inicio Rápido
 
 ```bash
+# 1. Instalar dependencias
 npm install
+
+# 2. Configurar variables de entorno
+cp .env.example .env.local
+
+# 3. Iniciar servidor de desarrollo
 npm run dev
 ```
 
 Abre [http://localhost:3000](http://localhost:3000) en tu navegador.
 
-## 📁 Estructura
+---
+
+## 📁 Estructura del Proyecto
 
 ```
-.
-├── app/                    # App Router (rutas y APIs)
-│   ├── layout.tsx         # Layout raíz
-│   ├── page.tsx           # Página principal
-│   ├── api/products/      # API endpoints
-│   └── globals.css
+testnext/
+├── app/                        # App Router
+│   ├── layout.tsx              # Layout raíz
+│   ├── page.tsx                # Página principal
+│   ├── globals.css             # Estilos globales
+│   └── api/
+│       └── products/           # Endpoints REST
+│           ├── route.ts        # GET, POST
+│           └── [id]/
+│               └── route.ts   # GET, PUT, DELETE
+│
 ├── src/
-│   ├── components/        # Componentes reutilizables
-│   ├── features/          # Módulos funcionales (dashboard)
-│   ├── hooks/             # Custom hooks
-│   ├── types/             # Tipos TypeScript
-│   └── utils/             # Utilidades
-├── public/                # Archivos estáticos
+│   ├── components/             # Componentes reutilizables
+│   │   └── ui/                 # Primitivos UI
+│   ├── features/               # Módulos funcionales
+│   │   └── dashboard/          # Vista de inventario
+│   ├── hooks/                  # Custom hooks
+│   ├── types/                  # Definiciones TypeScript
+│   └── utils/                  # Funciones de utilidad
+│
+├── public/                     # Archivos estáticos
+├── .env.example                # Plantilla de variables de entorno
 └── package.json
 ```
 
-## 🎨 Componentes Disponibles
+---
 
-### UI Base (7)
-- `Button` - Botones con múltiples variantes
-- `Input` - Campos de texto
-- `Select` - Dropdowns
-- `Textarea` - Áreas de texto
-- `Checkbox` - Checkboxes
-- `Card` - Contenedores
-- `Badge` - Etiquetas
+## 🧩 Componentes
 
-### Producto (4)
-- `ProductCard` - Tarjeta de producto
-- `ProductTable` - Tabla de productos con sort
-- `ProductForm` - Formulario CRUD
-- `CategorySelector` - Selector de categorías
+### Primitivos UI (7)
+
+| Componente | Descripción |
+|---|---|
+| `Button` | Botones con múltiples variantes y estados |
+| `Input` | Campos de texto con validación |
+| `Select` | Dropdowns accesibles |
+| `Textarea` | Áreas de texto con auto-resize |
+| `Checkbox` | Checkboxes con estado indeterminado |
+| `Card` | Contenedores con variantes de elevación |
+| `Badge` | Etiquetas de estado y categoría |
+
+### Módulo Producto (4)
+
+| Componente | Descripción |
+|---|---|
+| `ProductCard` | Vista de tarjeta con acciones rápidas |
+| `ProductTable` | Tabla con ordenamiento y filtros |
+| `ProductForm` | Formulario CRUD con validación completa |
+| `CategorySelector` | Selector de categorías con búsqueda |
 
 ### Layout (3)
-- `AppLayout` - Layout principal
-- `Sidebar` - Navegación lateral responsiva
-- `Header` - Barra superior con search
 
-## 📡 API Endpoints
+| Componente | Descripción |
+|---|---|
+| `AppLayout` | Layout principal de la aplicación |
+| `Sidebar` | Navegación lateral con colapso responsivo |
+| `Header` | Barra superior con búsqueda global |
 
-```
-GET    /api/products         # Obtener todos
-POST   /api/products         # Crear nuevo
-GET    /api/products/[id]    # Obtener por ID
-PUT    /api/products/[id]    # Actualizar
-DELETE /api/products/[id]    # Eliminar
-```
+---
 
-## 🔧 Scripts Disponibles
+## 📡 API Reference
+
+**Base URL:** `/api/products`
+
+| Método | Endpoint | Descripción |
+|---|---|---|
+| `GET` | `/api/products` | Listar todos los productos |
+| `POST` | `/api/products` | Crear un nuevo producto |
+| `GET` | `/api/products/:id` | Obtener producto por ID |
+| `PUT` | `/api/products/:id` | Actualizar producto |
+| `DELETE` | `/api/products/:id` | Eliminar producto |
+
+---
+
+## ⚙️ Scripts
 
 ```bash
-npm run dev         # Desarrollo (http://localhost:3000)
-npm run build       # Build producción
-npm start           # Iniciar servidor producción
-npm run lint        # Linting con ESLint
-npm run type-check  # Validación TypeScript
+npm run dev          # Servidor de desarrollo → http://localhost:3000
+npm run build        # Build para producción
+npm start            # Iniciar servidor de producción
+npm run lint         # Análisis estático con ESLint
+npm run type-check   # Validación de tipos TypeScript
 ```
 
-## 📖 Documentación
+---
 
-Ver [PLANNING.md](./PLANNING.md) para:
-- Tabla detallada de estimaciones y tiempo real
-- Decisiones arquitectónicas justificadas
-- Detalles de implementación
-- Guía de escalamiento futuro
+## 🔐 Variables de Entorno
 
-## 💻 Variables de Entorno
-
-Copia `.env.example` a `.env.local`:
+Copia `.env.example` a `.env.local` y configura los valores:
 
 ```bash
 cp .env.example .env.local
 ```
 
-Disponibles:
-- `NEXT_PUBLIC_API_URL` - URL de la API (por defecto: http://localhost:3000/api)
+| Variable | Valor por defecto | Descripción |
+|---|---|---|
+| `NEXT_PUBLIC_API_URL` | `http://localhost:3000/api` | URL base de la API |
+
+---
+
+## 📖 Documentación Adicional
+
+Consulta [`PLANNING.md`](./PLANNING.md) para:
+
+- Tabla de estimaciones y tiempos reales de implementación
+- Decisiones arquitectónicas y su justificación
+- Detalles de implementación por componente
+- Guía de escalamiento y próximos pasos
+
+---
 
 ## 📄 Licencia
 
-Este proyecto es de propósito educativo/prueba técnica.
+Proyecto de propósito educativo / prueba técnica. No destinado a uso en producción.
