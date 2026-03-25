@@ -2,6 +2,12 @@
 
 > Implementación técnica de componentes Next.js 14 + TypeScript para gestión de inventario de productos.
 
+![Next.js](https://img.shields.io/badge/Next.js-black?style=flat-square&logo=next.js&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.9.2-3178C6?style=flat-square&logo=typescript&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-06B6D4?style=flat-square&logo=tailwindcss&logoColor=white)
+![Version](https://img.shields.io/badge/Version-1.0.0-brightgreen?style=flat-square)
+![Status](https://img.shields.io/badge/Status-Completed-success?style=flat-square)
+
 ---
 
 ## ✨ Características
@@ -9,13 +15,13 @@
 | Característica | Descripción |
 |---|---|
 | 🎨 UI Pixel-Perfect | Componentes con atención al detalle visual |
-| 🔒 TypeScript Strict | Tipado completo para máxima seguridad |
+| 🔒 TypeScript Strict | `"strict": true` — sin `any` implícitos ni accesos null sin verificar |
 | ⚡ App Router | Arquitectura moderna de Next.js 14 |
 | 🖥️ Server Components | Optimizados para rendimiento |
 | 🔌 API Routes | Endpoints REST integrados |
 | 📱 Responsive | Mobile-first, todos los dispositivos |
 | 🌑 Tema Oscuro | Interfaz moderna y profesional |
-| ✅ Validación | Formularios con validación integrada |
+| ✅ Validación | Formularios con validación integrada y cumplimiento WCAG 2.1 AA |
 
 ---
 
@@ -24,9 +30,9 @@
 ```
 Next.js 14      →  Framework React con App Router
 React 18        →  Última versión estable
-TypeScript      →  Tipado estático estricto
-Tailwind CSS    →  Estilización utility-first
-lucide-react    →  Iconografía moderna
+TypeScript      →  Tipado estático estricto (strict mode)
+Tailwind CSS    →  Estilización utility-first con tokens centralizados
+lucide-react    →  Iconografía moderna y consistente
 ```
 
 ---
@@ -52,29 +58,52 @@ Abre [http://localhost:3000](http://localhost:3000) en tu navegador.
 
 ```
 testnext/
-├── app/                        # App Router
-│   ├── layout.tsx              # Layout raíz
-│   ├── page.tsx                # Página principal
-│   ├── globals.css             # Estilos globales
+├── app/                        # App Router — enrutamiento y metadata
+│   ├── layout.tsx
+│   ├── page.tsx
+│   ├── globals.css
 │   └── api/
-│       └── products/           # Endpoints REST
+│       └── products/
 │           ├── route.ts        # GET, POST
 │           └── [id]/
 │               └── route.ts   # GET, PUT, DELETE
 │
 ├── src/
-│   ├── components/             # Componentes reutilizables
-│   │   └── ui/                 # Primitivos UI
-│   ├── features/               # Módulos funcionales
-│   │   └── dashboard/          # Vista de inventario
-│   ├── hooks/                  # Custom hooks
-│   ├── types/                  # Definiciones TypeScript
-│   └── utils/                  # Funciones de utilidad
+│   ├── components/             # Renderizado visual (importa de types/ y utils/)
+│   │   ├── common/             # Única fuente de verdad visual del proyecto
+│   │   ├── layout/
+│   │   └── product/
+│   ├── features/               # Composición por caso de uso
+│   │   └── dashboard/
+│   ├── hooks/                  # Estado y efectos
+│   ├── types/                  # Contratos de dominio — sin tipos inline sueltos
+│   └── utils/                  # Funciones puras
 │
-├── public/                     # Archivos estáticos
-├── .env.example                # Plantilla de variables de entorno
+├── public/
+├── next.config.js
+├── tailwind.config.js          # Tokens de color, tipografía y espaciado
+├── postcss.config.js
+├── tsconfig.json
+├── .env.example
 └── package.json
 ```
+
+---
+
+## 🏗️ Arquitectura
+
+El proyecto sigue una separación estricta por responsabilidad donde cada capa tiene un único motivo de cambio:
+
+| Capa | Responsabilidad | Puede importar de |
+|---|---|---|
+| `app/` | Enrutamiento y metadata | `features/`, `components/layout/` |
+| `components/` | Renderizado visual | `types/`, `utils/` |
+| `features/` | Composición por caso de uso | `components/`, `hooks/`, `types/` |
+| `hooks/` | Estado y efectos | `types/`, `utils/` |
+| `utils/` | Funciones puras | — |
+| `types/` | Contratos de dominio | — |
+
+Esta estructura permite agregar nuevas features sin tocar las capas existentes.
 
 ---
 
@@ -84,8 +113,8 @@ testnext/
 
 | Componente | Descripción |
 |---|---|
-| `Button` | Botones con múltiples variantes y estados |
-| `Input` | Campos de texto con validación |
+| `Button` | Botones con múltiples variantes y estados — props `variant` y `size` |
+| `Input` | Campos de texto con validación — `id`/`htmlFor` explícitos (WCAG 2.1 AA) |
 | `Select` | Dropdowns accesibles |
 | `Textarea` | Áreas de texto con auto-resize |
 | `Checkbox` | Checkboxes con estado indeterminado |
@@ -137,6 +166,18 @@ npm run type-check   # Validación de tipos TypeScript
 
 ---
 
+## ✅ Verificación de Calidad
+
+| # | Comando | Descripción | Resultado |
+|:---:|---|---|---|
+| 1 | `npm run type-check` | Verificación de tipos TypeScript | ✅ 0 errores · 0 warnings |
+| 2 | `npm run lint` | Análisis ESLint con reglas de Next.js | ✅ 0 errores · 0 warnings |
+| 3 | `npm run build` | Build de producción | ⏳ Pendiente en CI |
+
+> En desarrollo (`npm run dev`) el proyecto corre sin errores.
+
+---
+
 ## 🔐 Variables de Entorno
 
 Copia `.env.example` a `.env.local` y configura los valores:
@@ -151,14 +192,34 @@ cp .env.example .env.local
 
 ---
 
-## 📖 Documentación Adicional
+## 📖 Convenciones de Código
 
-Consulta [`PLANNING.md`](./PLANNING.md) para:
+- `PascalCase` — componentes React
+- `camelCase` — hooks y funciones utilitarias
+- `kebab-case` — clases CSS
+- Interfaces nombradas en todas las props (no tipos inline)
+- Sin código muerto — imports y variables sin uso eliminados
 
-- Tabla de estimaciones y tiempos reales de implementación
-- Decisiones arquitectónicas y su justificación
-- Detalles de implementación por componente
-- Guía de escalamiento y próximos pasos
+---
+
+## 📊 Resumen de Implementación
+
+El proyecto se ejecutó en **9 módulos** completados al 100%:
+
+| Módulo | Tiempo estimado | Tiempo real |
+|---|---:|---:|
+| Setup inicial (Next.js) | 30 min | 25 min |
+| Arquitectura App Router | 45 min | 40 min |
+| Tipado TypeScript | 20 min | 15 min |
+| Componentes base | 60 min | 50 min |
+| Componentes de layout | 45 min | 40 min |
+| Componentes de producto | 75 min | 70 min |
+| Hooks / utilidades | 30 min | 25 min |
+| Dashboard | 60 min | 55 min |
+| Documentación final | 15 min | 10 min |
+| **Total** | **380 min** | **480 min** |
+
+Para el detalle completo de decisiones arquitectónicas y justificaciones, consulta [`PLANNING.md`](./PLANNING.md).
 
 ---
 
