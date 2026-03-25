@@ -164,4 +164,4 @@ Consulta [`PLANNING.md`](./PLANNING.md) para:
 
 ## 📄 Licencia
 
-Proyecto de propósito educativo / prueba técnica. No destinado a uso en producción.
+Proyecto de prueba técnica. No destinado a uso en producción.
