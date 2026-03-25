@@ -12,7 +12,7 @@ interface MemberProfileSidebarProps {
 
 const Toggle: React.FC<{ enabled?: boolean }> = ({ enabled = true }) => {
   return (
-    <span className={`w-8 h-4 rounded-full relative transition-colors ${enabled ? 'bg-primary-600' : 'bg-dark-700'}`}>
+    <span className={`w-8 h-4 rounded-full relative transition-colors ${enabled ? 'bg-brand-toggle' : 'bg-brand-toggle/35'}`}>
       <span className={`absolute top-0.5 w-3 h-3 rounded-full bg-white transition-all ${enabled ? 'left-4' : 'left-0.5'}`} />
     </span>
   )

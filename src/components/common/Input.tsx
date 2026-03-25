@@ -24,27 +24,29 @@ export const Input: React.FC<InputProps> = ({
       {label && (
         <label
           htmlFor={inputId}
-          className="block text-sm font-medium text-gray-200 mb-2"
+          className="mb-2 block text-label-12 text-brand-textStrong"
         >
           {label}
-          {props.required && <span className="text-primary-500 ml-1">*</span>}
+          {props.required && <span className="ml-1 text-brand-primary">*</span>}
         </label>
       )}
+
       <input
         id={inputId}
         className={`
-          w-full px-3 py-2 bg-dark-800 border border-dark-600 rounded
-          text-gray-100 placeholder-gray-500
-          focus:outline-none focus:border-primary-500 focus:ring-1 focus:ring-primary-500
-          disabled:bg-dark-700 disabled:text-gray-500 disabled:cursor-not-allowed
-          ${error ? "border-red-500 focus:border-red-500 focus:ring-red-500" : ""}
+          w-full rounded-lg border border-brand-border bg-brand-white px-3 py-2
+          text-text-12 text-brand-textStrong placeholder:text-brand-text
+          focus:outline-none focus:border-brand-active focus:ring-1 focus:ring-brand-active
+          disabled:cursor-not-allowed disabled:bg-brand-surface disabled:text-brand-text
+          ${error ? "border-brand-danger focus:border-brand-danger focus:ring-brand-danger" : ""}
           ${className}
         `}
         {...props}
       />
-      {error && <p className="text-xs text-red-400 mt-1">{error}</p>}
+
+      {error && <p className="mt-1 text-text-12 text-brand-danger">{error}</p>}
       {helperText && !error && (
-        <p className="text-xs text-gray-500 mt-1">{helperText}</p>
+        <p className="mt-1 text-text-12 text-brand-text">{helperText}</p>
       )}
     </div>
   );

@@ -272,7 +272,7 @@ export const Dashboard: React.FC = () => {
                 >
                   Anterior
                 </Button>
-                <Button variant="ghost" size="sm" onClick={closeFlow}>Cerrar flujo</Button>
+                <Button variant="neutral" size="sm" onClick={closeFlow}>Cerrar flujo</Button>
               </div>
             </div>
 

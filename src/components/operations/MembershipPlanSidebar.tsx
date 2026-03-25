@@ -6,12 +6,12 @@ import { Button, Card, Input, Select, Textarea } from '@/src/components/common'
 
 const Section: React.FC<{ title: string; children: React.ReactNode }> = ({ title, children }) => {
   return (
-    <Card className="p-0 overflow-hidden rounded-xl bg-dark-700/40">
-      <div className="px-5 py-3.5 bg-dark-700/60 flex items-center justify-between">
-        <h3 className="text-xs font-semibold tracking-wide text-gray-200">{title}</h3>
-        <ChevronDown size={14} className="text-gray-500" />
+    <Card className="p-0 overflow-hidden rounded-xl bg-brand-white border border-brand-soft shadow-none">
+      <div className="px-5 py-3.5 bg-brand-surface flex items-center justify-between">
+        <h3 className="text-xs font-semibold tracking-wide text-brand-text">{title}</h3>
+        <ChevronDown size={14} className="text-brand-text" />
       </div>
-      <div className="p-5 bg-dark-800/50">{children}</div>
+      <div className="p-5 bg-brand-white">{children}</div>
     </Card>
   )
 }
@@ -23,11 +23,11 @@ const ToggleRow: React.FC<{ label: string; enabled?: boolean; onToggle?: () => v
 }) => {
   return (
     <div className="flex items-center justify-between">
-      <span className="text-xs text-gray-300">{label}</span>
+      <span className="text-xs font-normal text-brand-text">{label}</span>
       <button
         type="button"
         onClick={onToggle}
-        className={`w-8 h-4 rounded-full relative transition-colors ${enabled ? 'bg-primary-600' : 'bg-dark-700'}`}
+        className={`w-8 h-4 rounded-full relative transition-colors ${enabled ? 'bg-brand-toggle' : 'bg-brand-toggle/35'}`}
         aria-label={`Cambiar estado de ${label}`}
       >
         <span
@@ -96,11 +96,11 @@ export const MembershipPlanSidebar: React.FC<MembershipPlanSidebarProps> = ({ on
   }
 
   return (
-    <div className="w-full max-w-[1200px] rounded-2xl bg-dark-800 border border-dark-700 p-6 space-y-4">
+    <div className="w-full max-w-[1200px] rounded-2xl bg-brand-surface border border-brand-soft p-6 space-y-4">
       <div className="flex items-center justify-between">
-        <h2 className="text-sm font-semibold text-gray-100">Crear nuevo plan</h2>
+        <h2 className="text-2xl font-semibold text-brand-black">Crear nuevo plan</h2>
         <button
-          className="text-gray-500 hover:text-gray-300 transition-colors"
+          className="text-brand-text hover:text-brand-black transition-colors"
           aria-label="Cerrar sidebar"
           onClick={onClose}
         >
@@ -204,7 +204,7 @@ export const MembershipPlanSidebar: React.FC<MembershipPlanSidebarProps> = ({ on
           />
 
           <div className="space-y-2">
-            <div className="grid grid-cols-[42px_1fr_1fr_20px] gap-2 text-[10px] text-gray-500 uppercase">
+            <div className="grid grid-cols-[42px_1fr_1fr_20px] gap-2 text-[10px] text-brand-text uppercase">
               <span>Día</span>
               <span>Hora de i</span>
               <span>Hora de f</span>
@@ -212,22 +212,22 @@ export const MembershipPlanSidebar: React.FC<MembershipPlanSidebarProps> = ({ on
             </div>
             {schedules.map((item, index) => (
               <div key={item.day} className="grid grid-cols-[42px_1fr_1fr_20px] gap-2 items-center">
-                <div className="h-7 rounded-md bg-primary-600 text-white text-[11px] flex items-center justify-center">
+                <div className="h-7 rounded-md bg-brand-toggle text-white text-[11px] font-semibold flex items-center justify-center">
                   {item.day}
                 </div>
                 <input
                   type="time"
                   value={item.from}
                   onChange={(e) => updateSchedule(index, 'from', e.target.value)}
-                  className="h-7 rounded-md border border-dark-700 bg-dark-900 px-2 text-xs text-gray-300"
+                  className="h-7 rounded-md border border-brand-soft bg-brand-white px-2 text-xs text-brand-black"
                 />
                 <input
                   type="time"
                   value={item.to}
                   onChange={(e) => updateSchedule(index, 'to', e.target.value)}
-                  className="h-7 rounded-md border border-dark-700 bg-dark-900 px-2 text-xs text-gray-300"
+                  className="h-7 rounded-md border border-brand-soft bg-brand-white px-2 text-xs text-brand-black"
                 />
-                <button type="button" className="text-gray-500 hover:text-gray-300" onClick={addScheduleRow}>
+                <button type="button" className="text-brand-text hover:text-brand-black" onClick={addScheduleRow}>
                   <Plus size={12} />
                 </button>
               </div>
@@ -266,22 +266,22 @@ export const MembershipPlanSidebar: React.FC<MembershipPlanSidebarProps> = ({ on
             onChange={(e) => updateField('access', e.target.value)}
           />
           <div className="space-y-1">
-            <div className="grid grid-cols-[50px_1fr_1fr] gap-2 text-[10px] text-gray-500 uppercase">
+            <div className="grid grid-cols-[50px_1fr_1fr] gap-2 text-[10px] text-brand-text uppercase">
               <span>Tipo</span>
               <span>Evento</span>
               <span>Acceso</span>
             </div>
-            <div className="grid grid-cols-[50px_1fr_1fr] gap-2 text-[11px] text-gray-300">
+            <div className="grid grid-cols-[50px_1fr_1fr] gap-2 text-[11px] text-brand-black">
               <span>AL</span>
               <span>Evento A</span>
               <span>Semana/Mañana/Preferente</span>
             </div>
-            <div className="grid grid-cols-[50px_1fr_1fr] gap-2 text-[11px] text-gray-300">
+            <div className="grid grid-cols-[50px_1fr_1fr] gap-2 text-[11px] text-brand-black">
               <span>ES</span>
               <span>Evento B</span>
               <span>Semana/Mañana/Preferente</span>
             </div>
-            <div className="grid grid-cols-[50px_1fr_1fr] gap-2 text-[11px] text-gray-300">
+            <div className="grid grid-cols-[50px_1fr_1fr] gap-2 text-[11px] text-brand-black">
               <span>SS</span>
               <span>Evento C</span>
               <span>Semana/Mañana/Preferente</span>
@@ -300,10 +300,16 @@ export const MembershipPlanSidebar: React.FC<MembershipPlanSidebarProps> = ({ on
       </Section>
 
       <div className="flex gap-2 pt-1">
-        <Button variant="secondary" className="flex-1" onClick={onClose}>Cancelar</Button>
+        <Button
+          variant="secondary"
+          className="flex-1 bg-white border border-brand-border text-brand-text hover:bg-brand-surface text-base font-semibold"
+          onClick={onClose}
+        >
+          Cancelar
+        </Button>
         <Button
           variant="primary"
-          className="flex-1"
+          className="flex-1 bg-gradient-to-r from-brand-start to-brand-end hover:from-brand-start hover:to-brand-end text-white text-base font-semibold disabled:from-brand-border disabled:to-brand-border"
           onClick={handleCreate}
           disabled={!isValid}
           disabledReason="Completa los campos obligatorios para poder crear el plan."

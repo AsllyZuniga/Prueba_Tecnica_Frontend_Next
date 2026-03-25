@@ -1,6 +1,6 @@
-'use client'
+"use client";
 
-import React, { useId } from 'react'
+import React, { useId } from "react";
 
 interface CheckboxProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label?: string;
@@ -10,12 +10,12 @@ interface CheckboxProps extends React.InputHTMLAttributes<HTMLInputElement> {
 export const Checkbox: React.FC<CheckboxProps> = ({
   label,
   error,
-  className = '',
+  className = "",
   id,
   ...props
 }) => {
-  const generatedId = useId()
-  const checkboxId = id ?? generatedId
+  const generatedId = useId();
+  const checkboxId = id ?? generatedId;
 
   return (
     <div className="flex items-start gap-2">
@@ -23,19 +23,22 @@ export const Checkbox: React.FC<CheckboxProps> = ({
         id={checkboxId}
         type="checkbox"
         className={`
-          mt-1 w-4 h-4 rounded border border-dark-600 bg-dark-800
-          cursor-pointer accent-primary-600
-          focus:outline-none focus:ring-2 focus:ring-primary-500
+          mt-1 h-4 w-4 rounded border border-brand-border bg-brand-white
+          cursor-pointer accent-brand-active
+          focus:outline-none focus:ring-2 focus:ring-brand-active
           ${className}
         `}
         {...props}
       />
       {label && (
-        <label htmlFor={checkboxId} className="text-sm text-gray-200 cursor-pointer flex-1">
+        <label
+          htmlFor={checkboxId}
+          className="flex-1 cursor-pointer text-text-12 text-brand-textStrong"
+        >
           {label}
         </label>
       )}
-      {error && <p className="text-xs text-red-400 mt-1">{error}</p>}
+      {error && <p className="mt-1 text-text-12 text-brand-danger">{error}</p>}
     </div>
-  )
-}
+  );
+};

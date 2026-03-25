@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react";
 
 interface CardProps {
   children: React.ReactNode;
@@ -6,15 +6,19 @@ interface CardProps {
   onClick?: () => void;
 }
 
-export const Card: React.FC<CardProps> = ({ children, className = '', onClick }) => {
+export const Card: React.FC<CardProps> = ({
+  children,
+  className = "",
+  onClick,
+}) => {
   const interactiveClasses = onClick
-    ? 'cursor-pointer hover:shadow-lg hover:shadow-black/20 transition-shadow duration-200'
-    : ''
+    ? "cursor-pointer hover:shadow-md transition-shadow duration-200"
+    : "";
 
   return (
     <div
       className={`
-        bg-dark-800 rounded-xl p-5 shadow-md shadow-black/10
+        bg-brand-white rounded-xl p-5 border border-brand-border shadow-sm
         ${interactiveClasses}
         ${className}
       `}
@@ -22,5 +26,5 @@ export const Card: React.FC<CardProps> = ({ children, className = '', onClick })
     >
       {children}
     </div>
-  )
-}
+  );
+};
