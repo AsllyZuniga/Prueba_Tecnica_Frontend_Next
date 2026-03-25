@@ -9,7 +9,7 @@
 | Característica | Descripción |
 |---|---|
 | 🎨 UI Pixel-Perfect | Componentes con atención al detalle visual |
-| 🔒 TypeScript Strict | Tipado completo para máxima seguridad |
+| 🔒 TypeScript Strict | `"strict": true` — sin `any` implícitos ni accesos null sin verificar |
 | ⚡ App Router | Arquitectura moderna de Next.js 14 |
 | 🖥️ Server Components | Optimizados para rendimiento |
 | 🔌 API Routes | Endpoints REST integrados |
