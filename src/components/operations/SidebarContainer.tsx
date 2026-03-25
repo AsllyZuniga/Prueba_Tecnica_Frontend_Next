@@ -39,7 +39,7 @@ export const SidebarContainer: React.FC<SidebarContainerProps> = ({ onClose, onC
         </div>
         <div className="flex items-center justify-between text-xs">
           <p className="text-gray-500">Estado</p>
-          <Badge variant="warning">En revisión</Badge>
+          <Badge variant="info" className="bg-primary-600 text-white">En revisión</Badge>
         </div>
       </Card>
 
@@ -60,14 +60,14 @@ export const SidebarContainer: React.FC<SidebarContainerProps> = ({ onClose, onC
           <div className="grid grid-cols-[70px_1fr_70px_70px] gap-2 text-xs text-gray-300 items-center">
             <span>GH-01</span>
             <span className="truncate">Fuerza</span>
-            <span><Badge variant="danger">Falta</Badge></span>
+            <span><Badge variant="danger" className="bg-red-600 text-white">Falta</Badge></span>
             <span>12/02/2025</span>
           </div>
 
           <div className="grid grid-cols-[70px_1fr_70px_70px] gap-2 text-xs text-gray-300 items-center">
             <span>GH-02</span>
             <span className="truncate">Cardio</span>
-            <span><Badge variant="warning">Alerta</Badge></span>
+            <span><Badge variant="warning" className="bg-amber-600 text-white">Alerta</Badge></span>
             <span>11/02/2025</span>
           </div>
 

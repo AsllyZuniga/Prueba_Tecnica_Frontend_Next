@@ -3,7 +3,7 @@ import '@/src/styles/globals.css'
 import { Sidebar } from '@/src/components/layout'
 
 export const metadata: Metadata = {
-  title: 'Mext - Operaciones',
+  title: 'TestNext - Operaciones',
   description: 'Gestión operativa de incidencias y membresías',
 }
 

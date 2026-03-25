@@ -8,7 +8,7 @@ import {
   ProductEditSidebar,
   SidebarContainer,
   WorkOrderEditSidebar,
-} from '@/src/components/product'
+} from '@/src/components/operations'
 import { Button, Card } from '@/src/components/common'
 
 type FlowStep = 'container' | 'incident' | 'work-order' | 'membership' | 'member-profile'
@@ -148,7 +148,7 @@ export const Dashboard: React.FC = () => {
   return (
     <div className="min-h-full space-y-4 relative">
       <Card className="space-y-1">
-        <h1 className="text-2xl font-semibold text-white">Mext · Operaciones</h1>
+        <h1 className="text-2xl font-semibold text-white">TestNext · Operaciones</h1>
         <p className="text-sm text-gray-400">Gestiona incidencias y membresías desde el menú lateral.</p>
       </Card>
 
@@ -267,6 +267,7 @@ export const Dashboard: React.FC = () => {
                   variant="secondary"
                   size="sm"
                   disabled={!flowProgress || flowProgress.currentStepNumber === 1}
+                  disabledReason="No se puede volver atrás porque estás en el primer paso del flujo."
                   onClick={goToPreviousStep}
                 >
                   Anterior

@@ -1,9 +1,25 @@
 'use client'
 
-import React from 'react'
+import React, { useMemo, useRef, useState } from 'react'
 import Image from 'next/image'
 import { ChevronDown, Plus, Upload, Video, X } from 'lucide-react'
 import { Badge, Button, Card } from '@/src/components/common'
+
+type WorkOrderStatus = 'En progreso' | 'Pendiente' | 'Completada'
+
+interface MediaItem {
+  id: string;
+  src: string;
+  alt: string;
+}
+
+const WORK_ORDER_STATUS_OPTIONS: WorkOrderStatus[] = ['En progreso', 'Pendiente', 'Completada']
+
+const ASSIGNEE_OPTIONS = [
+  'Juan Pérez (Técnico mantenimiento)',
+  'Ana Torres (Técnico mantenimiento)',
+  'Luis Romero (Supervisor técnico)',
+]
 
 const Section: React.FC<{ title: string; children: React.ReactNode }> = ({ title, children }) => {
   return (
@@ -23,6 +39,52 @@ interface WorkOrderEditSidebarProps {
 }
 
 export const WorkOrderEditSidebar: React.FC<WorkOrderEditSidebarProps> = ({ onClose, onComplete }) => {
+  const fileInputRef = useRef<HTMLInputElement | null>(null)
+  const [status, setStatus] = useState<WorkOrderStatus>('En progreso')
+  const [assignee, setAssignee] = useState(ASSIGNEE_OPTIONS[0])
+  const [mediaItems, setMediaItems] = useState<MediaItem[]>([
+    { id: 'preset-1', src: '/figma/asset-1.png', alt: 'Evidencia de OT 1' },
+    { id: 'preset-2', src: '/figma/asset-3.png', alt: 'Evidencia de OT 2' },
+  ])
+
+  const statusVariant = useMemo(() => {
+    if (status === 'Completada') return 'success'
+    if (status === 'Pendiente') return 'warning'
+    return 'warning'
+  }, [status])
+
+  const handleSelectFiles = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const files = event.target.files
+    if (!files?.length) return
+
+    const newItems: MediaItem[] = Array.from(files)
+      .filter((file) => file.type.startsWith('image/'))
+      .map((file) => ({
+        id: `${file.name}-${file.lastModified}`,
+        src: URL.createObjectURL(file),
+        alt: file.name,
+      }))
+
+    if (!newItems.length) return
+
+    setMediaItems((previous) => [...previous, ...newItems])
+    event.target.value = ''
+  }
+
+  const handleOpenFilePicker = () => fileInputRef.current?.click()
+
+  const handleChangeStatus = () => {
+    const currentIndex = WORK_ORDER_STATUS_OPTIONS.indexOf(status)
+    const nextIndex = (currentIndex + 1) % WORK_ORDER_STATUS_OPTIONS.length
+    setStatus(WORK_ORDER_STATUS_OPTIONS[nextIndex])
+  }
+
+  const handleReassign = () => {
+    const currentIndex = ASSIGNEE_OPTIONS.indexOf(assignee)
+    const nextIndex = (currentIndex + 1) % ASSIGNEE_OPTIONS.length
+    setAssignee(ASSIGNEE_OPTIONS[nextIndex])
+  }
+
   return (
     <div className="w-full max-w-[1200px] rounded-2xl bg-dark-800 border border-dark-700 p-6 space-y-4">
       <div className="flex items-start justify-between gap-3">
@@ -57,7 +119,7 @@ export const WorkOrderEditSidebar: React.FC<WorkOrderEditSidebarProps> = ({ onCl
           </div>
           <div className="text-right">
             <p className="text-gray-500 mb-1">Estado</p>
-            <Badge variant="warning">En progreso</Badge>
+            <Badge variant={statusVariant}>{status}</Badge>
           </div>
         </div>
       </Card>
@@ -81,12 +143,38 @@ export const WorkOrderEditSidebar: React.FC<WorkOrderEditSidebarProps> = ({ onCl
           <div className="grid grid-cols-2 gap-2">
             <div>
               <p className="text-gray-500">Asignado a</p>
-              <p className="text-gray-200">Juan Pérez (Técnico mantenimiento)</p>
+              <p className="text-gray-200">{assignee}</p>
             </div>
             <div>
               <p className="text-gray-500">Fecha de creación</p>
               <p className="text-gray-200">10/10/2025 - 12:00</p>
             </div>
+          </div>
+          <div className="grid grid-cols-2 gap-2">
+            <label className="text-gray-500">
+              Estado
+              <select
+                value={status}
+                onChange={(event) => setStatus(event.target.value as WorkOrderStatus)}
+                className="mt-1 w-full rounded-md border border-dark-700 bg-dark-900 px-2 py-1.5 text-xs text-gray-200 outline-none focus:border-primary-500"
+              >
+                {WORK_ORDER_STATUS_OPTIONS.map((option) => (
+                  <option key={option} value={option}>{option}</option>
+                ))}
+              </select>
+            </label>
+            <label className="text-gray-500">
+              Reasignar a
+              <select
+                value={assignee}
+                onChange={(event) => setAssignee(event.target.value)}
+                className="mt-1 w-full rounded-md border border-dark-700 bg-dark-900 px-2 py-1.5 text-xs text-gray-200 outline-none focus:border-primary-500"
+              >
+                {ASSIGNEE_OPTIONS.map((option) => (
+                  <option key={option} value={option}>{option}</option>
+                ))}
+              </select>
+            </label>
           </div>
           <div className="grid grid-cols-2 gap-2">
             <div>
@@ -188,34 +276,43 @@ export const WorkOrderEditSidebar: React.FC<WorkOrderEditSidebarProps> = ({ onCl
 
       <Section title="Medios">
         <div className="space-y-3">
-          <button className="w-full border border-dark-700 rounded-lg py-4 px-3 bg-dark-900 hover:bg-dark-800 transition-colors text-center">
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept="image/*"
+            multiple
+            className="hidden"
+            onChange={handleSelectFiles}
+          />
+          <button
+            type="button"
+            onClick={handleOpenFilePicker}
+            className="w-full border border-dark-700 rounded-lg py-4 px-3 bg-dark-900 hover:bg-dark-800 transition-colors text-center"
+          >
             <Upload size={18} className="mx-auto text-gray-300" />
             <p className="text-[11px] text-gray-300 mt-2">Arrastra imágenes aquí o</p>
             <p className="text-[11px] text-primary-500 mt-0.5">busca archivos</p>
           </button>
           <div className="grid grid-cols-4 gap-2">
-            <button className="h-10 rounded-md border border-dark-700 bg-dark-900 overflow-hidden">
-              <Image
-                src="/figma/asset-1.png"
-                alt="Evidencia de OT 1"
-                width={40}
-                height={40}
-                className="w-full h-full object-cover"
-              />
-            </button>
-            <button className="h-10 rounded-md border border-dark-700 bg-dark-900 overflow-hidden">
-              <Image
-                src="/figma/asset-3.png"
-                alt="Evidencia de OT 2"
-                width={40}
-                height={40}
-                className="w-full h-full object-cover"
-              />
-            </button>
+            {mediaItems.slice(0, 2).map((item) => (
+              <button key={item.id} className="h-10 rounded-md border border-dark-700 bg-dark-900 overflow-hidden">
+                {item.src.startsWith('/figma/') ? (
+                  <Image
+                    src={item.src}
+                    alt={item.alt}
+                    width={40}
+                    height={40}
+                    className="w-full h-full object-cover"
+                  />
+                ) : (
+                  <img src={item.src} alt={item.alt} className="w-full h-full object-cover" />
+                )}
+              </button>
+            ))}
             <button className="h-10 rounded-md border border-dark-700 bg-dark-900 flex items-center justify-center text-gray-500">
               <Video size={14} />
             </button>
-            <button className="h-10 rounded-md border border-dark-700 bg-dark-900 flex items-center justify-center text-gray-300">
+            <button type="button" onClick={handleOpenFilePicker} className="h-10 rounded-md border border-dark-700 bg-dark-900 flex items-center justify-center text-gray-300">
               <Plus size={14} />
             </button>
           </div>
@@ -239,6 +336,8 @@ export const WorkOrderEditSidebar: React.FC<WorkOrderEditSidebarProps> = ({ onCl
       </Card>
 
       <div className="flex gap-2 pt-1">
+        <Button variant="secondary" className="flex-1" onClick={handleChangeStatus}>Cambiar estado</Button>
+        <Button variant="secondary" className="flex-1" onClick={handleReassign}>Reasignar</Button>
         <Button variant="secondary" className="flex-1" onClick={onComplete}>Completar y cerrar</Button>
       </div>
     </div>

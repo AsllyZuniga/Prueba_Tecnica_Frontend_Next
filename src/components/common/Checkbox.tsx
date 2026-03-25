@@ -24,8 +24,8 @@ export const Checkbox: React.FC<CheckboxProps> = ({
         type="checkbox"
         className={`
           mt-1 w-4 h-4 rounded border border-dark-600 bg-dark-800
-          cursor-pointer accent-pink-500
-          focus:outline-none focus:ring-2 focus:ring-pink-500
+          cursor-pointer accent-primary-600
+          focus:outline-none focus:ring-2 focus:ring-primary-500
           ${className}
         `}
         {...props}

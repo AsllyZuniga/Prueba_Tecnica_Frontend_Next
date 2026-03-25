@@ -17,6 +17,7 @@ export const Sidebar: React.FC = () => {
   const searchParams = useSearchParams()
 
   const activeFlow = searchParams.get('flow')
+  const isSidebarHidden = searchParams.get('sidebar') === 'hidden'
 
   const menuItems = [
     { id: 'home', label: 'Inicio', Icon: Home, flow: null },
@@ -53,12 +54,12 @@ export const Sidebar: React.FC = () => {
         className={`
           fixed left-0 top-0 bottom-0 w-64 bg-dark-900 border-r border-dark-700
           transform transition-transform duration-300 z-40
-          lg:translate-x-0 ${isOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
+          ${isOpen ? 'translate-x-0' : '-translate-x-full'} ${isSidebarHidden ? 'lg:-translate-x-full' : 'lg:translate-x-0'}
         `}
       >
         <div className="p-6">
           <h1 className="text-xl font-bold text-white mb-8">
-            <span className="text-pink-500">Me</span>xt
+            <span className="text-primary-500">Test</span>Next
           </h1>
 
           <nav className="space-y-2">
@@ -72,7 +73,7 @@ export const Sidebar: React.FC = () => {
                 className={`
                   w-full text-left px-4 py-3 rounded-lg transition-colors duration-200
                   hover:bg-dark-800 text-gray-200 flex items-center gap-3
-                  ${isActive ? 'bg-pink-500 text-white' : ''}
+                  ${isActive ? 'bg-primary-600 text-white' : ''}
                 `}
               >
                 <item.Icon size={16} aria-hidden="true" />

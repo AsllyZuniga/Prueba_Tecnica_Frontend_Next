@@ -18,10 +18,10 @@
 |---|---|
 | **Fecha de inicio** | 2026-03-24 |
 | **Tiempo máximo** | 7 h (420 min) |
-| **Tiempo real** | 5.9 h (355 min) |
-| **Tiempo ahorrado** | 55 min — 13% por debajo del límite |
+| **Tiempo real** | 8 h (480 min) |
+| **Desvío** | +60 min — 14% por encima del límite |
 | **Cobertura del plan** | 9 / 9 módulos completados (100%) |
-| **Estado general** | Completado sin bloqueos |
+| **Estado general** | Completado |
 
 ---
 
@@ -38,39 +38,35 @@
 | 07 | Hooks / utilidades | 30 min | 25 min | −5 min | ✅ |
 | 08 | Dashboard | 60 min | 55 min | −5 min | ✅ |
 | 09 | Documentación final | 15 min | 10 min | −5 min | ✅ |
-| — | **Total** | **380 min** | **330 min** | **−50 min** | **✅** |
+| — | **Total** | **380 min** | **480 min** | **+100 min** | **✅** |
 
 ---
 
 ## Estructura del proyecto
 ```text
 .
-├── app/                          # Capa de enrutamiento (Next.js App Router)
-│   ├── layout.tsx                # Layout raíz — providers, fuentes, metadata
-│   └── page.tsx                  # Entry point — redirige al dashboard
-│
+├── app/
+│   ├── layout.tsx
+│   ├── page.tsx
 ├── src/
-│   ├── components/               # UI reutilizable (sin lógica de negocio)
-│   │   ├── common/               # Átomos: Button, Input, Badge, Card, Spinner
-│   │   ├── layout/               # Estructura: Header, Sidebar, PageWrapper
-│   │   └── product/              # Moléculas de dominio: ProductCard, ProductForm
-│   │
+│   ├── components/
+│   │   ├── common/
+│   │   ├── layout/
+│   │   └── product/
 │   ├── features/
-│   │   └── dashboard/            # Caso de uso principal: composición + estado
-│   │
-│   ├── hooks/                    # Custom hooks: useProducts, useForm, useDebounce
+│   │   └── dashboard/
+│   ├── hooks/
 │   ├── styles/
-│   │   └── globals.css           # Reset, tokens CSS, utilidades globales
-│   ├── types/                    # Interfaces de dominio: Product, ApiResponse...
-│   └── utils/                    # Helpers puros: formatters, validators, mappers
-│
-├── public/                       # Assets estáticos (imágenes, favicon, fonts)
-├── next.config.js                # Configuración de Next.js
-├── tailwind.config.js            # Design tokens y extensiones de tema
+│   │   └── globals.css
+│   ├── types/
+│   └── utils/
+├── public/
+├── next.config.js
+├── tailwind.config.js
 ├── postcss.config.js
-├── tsconfig.json                 # Strict mode habilitado
-├── .env.example                  # Variables de entorno documentadas
-└── README.md                     # Guía de instalación y uso
+├── tsconfig.json
+├── .env.example
+└── README.md
 ```
 
 ---
@@ -79,37 +75,37 @@
 
 ### 1. Separación por responsabilidad
 
-Cada capa tiene un contrato claro y no lo viola:
+Definí límites claros entre capas para que cada módulo tenga un único motivo de cambio:
 
 | Capa | Responsabilidad | Puede importar de |
 |---|---|---|
 | `app/` | Enrutamiento y metadata | `features/`, `components/layout/` |
-| `components/` | Renderizado visual puro | `types/`, `utils/` |
+| `components/` | Renderizado visual | `types/`, `utils/` |
 | `features/` | Composición por caso de uso | `components/`, `hooks/`, `types/` |
-| `hooks/` | Lógica de estado y efectos | `types/`, `utils/` |
-| `utils/` | Funciones puras sin efectos | — |
+| `hooks/` | Estado y efectos | `types/`, `utils/` |
+| `utils/` | Funciones puras | — |
 | `types/` | Contratos de dominio | — |
 
 ### 2. Tipado estricto
 
-- `tsconfig.json` con `"strict": true` — sin `any` implícitos, sin null unchecked.
-- Interfaces de dominio en `src/types`; nunca tipos inline en componentes.
-- Props tipadas con interfaces nombradas — facilita el autocompletado y refactor.
-- Retornos de funciones tipados explícitamente en utils y hooks.
+- `"strict": true` en `tsconfig.json` — sin `any` implícitos ni accesos null sin verificar.
+- Todos los tipos de dominio viven en `src/types`; nada de tipos inline sueltos en componentes.
+- Props con interfaces nombradas para facilitar el autocompletado y los refactors.
+- Funciones en utils y hooks con retornos tipados explícitamente.
 
 ### 3. Reutilización y consistencia visual
 
-- Sistema de componentes base como única fuente de verdad visual.
+- Los componentes de `common/` son la única fuente de verdad visual del proyecto.
 - Tokens de color, tipografía y espaciado centralizados en `tailwind.config.js`.
-- Ningún componente de dominio duplica estilos ya definidos en la capa `common/`.
-- Variantes de componentes manejadas con props (`variant`, `size`) — sin clases condicionales ad hoc.
+- Ningún componente de dominio repite estilos que ya existan en la capa base.
+- Variantes manejadas por props (`variant`, `size`) en lugar de clases condicionales dispersas.
 
-### 4. Estándares de calidad y accesibilidad
+### 4. Calidad y accesibilidad
 
-- Zero dead code — eliminación de imports, variables y componentes no utilizados.
-- Iconografía con librería estandarizada — (consistencia cross-platform).
-- Atributos `id` y `htmlFor` estables en formularios — cumplimiento WCAG 2.1 nivel AA.
-- Nomenclatura consistente: `PascalCase` componentes · `camelCase` hooks y utils · `kebab-case` archivos CSS.
+- Sin código muerto — imports, variables y componentes sin uso fueron eliminados antes de cerrar.
+- Iconografía con librería dedicada para garantizar consistencia entre plataformas.
+- `id` y `htmlFor` definidos explícitamente en todos los formularios — cumplimiento WCAG 2.1 AA.
+- Nomenclatura uniforme: `PascalCase` en componentes · `camelCase` en hooks y utils · `kebab-case` en CSS.
 
 ---
 
@@ -117,17 +113,18 @@ Cada capa tiene un contrato claro y no lo viola:
 
 | # | Comando | Descripción | Resultado | Estado |
 |:---:|---|---|---|:---:|
-| 1 | `npm run type-check` | Verificación estática de tipos TypeScript | 0 errores · 0 warnings | ✅ |
+| 1 | `npm run type-check` | Verificación de tipos TypeScript | 0 errores · 0 warnings | ✅ |
 | 2 | `npm run lint` | Análisis ESLint con reglas de Next.js | 0 errores · 0 warnings | ✅ |
-| 3 | `npm run build` | Compilación optimizada para producción | — | ⏳ |
+| 3 | `npm run build` | Build de producción | — | ⏳ |
 
-> **CI/CD:** El build de producción (`npm run build`) queda pendiente de validación en entorno de integración continua.
-> El proyecto ejecuta correctamente en desarrollo con `npm run dev`.
+> El build de producción queda pendiente de correr en CI.
+> En desarrollo (`npm run dev`) el proyecto corre sin errores.
 
 ---
 
 ## Notas finales
 
-- Todos los módulos fueron entregados dentro del presupuesto de tiempo.
-- La arquitectura está preparada para escalar: agregar features no requiere modificar capas existentes.
-- El tipado estricto y el linting sin errores garantizan una base mantenible a largo plazo.
+- El tiempo real superó el estimado en 1 hora, principalmente por ajustes en los componentes de producto y el dashboard.
+- Todos los módulos se entregaron completos y funcionales.
+- La estructura permite agregar nuevas features sin tocar las capas existentes.
+- Con el tipado y el linting en verde, la base está lista para escalar sin deuda técnica.
