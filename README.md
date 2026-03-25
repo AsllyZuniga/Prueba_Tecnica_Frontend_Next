@@ -16,7 +16,7 @@
 |---|---|
 | 🎨 UI Pixel-Perfect | Componentes con atención al detalle visual |
 | 🔒 TypeScript Strict | `"strict": true` — sin `any` implícitos ni accesos null sin verificar |
-| ⚡ App Router | Arquitectura moderna de Next.js 14 |
+| ⚡ App Router | Arquitectura moderna de Next.js  |
 | 🖥️ Server Components | Optimizados para rendimiento |
 | 📱 Responsive | Mobile-first, todos los dispositivos |
 | 🌑 Tema Oscuro | Interfaz moderna y profesional |
