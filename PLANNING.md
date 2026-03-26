@@ -20,7 +20,7 @@
 | **Tiempo máximo** | 7 h (420 min) |
 | **Tiempo real** | 8 h (480 min) |
 | **Desvío** | +60 min — 14% sobre el estimado |
-| **Cobertura del plan** | 9 / 9 módulos completados (100%) |
+| **Cobertura del plan** | 10 / 10 módulos completados (100%) |
 | **Estado general** | Completado |
 
 ---
@@ -38,7 +38,8 @@
 | 07 | Hooks / utilidades | 30 min | 25 min | −5 min | ✅ |
 | 08 | Dashboard | 60 min | 55 min | −5 min | ✅ |
 | 09 | Documentación final | 15 min | 10 min | −5 min | ✅ |
-| — | **Total** | **380 min** | **480 min** | **+100 min** | **✅** |
+| 10 | Refinamientos UI iterativos | 40 min | 140 min | +100 min | ✅ |
+| — | **Total** | **420 min** | **480 min** | **+60 min** | **✅** |
 
 ---
 
@@ -48,26 +49,55 @@
 .
 ├── app/
 │   ├── layout.tsx
-│   ├── page.tsx
+│   └── page.tsx
+├── public/
+│   └── figma/
 ├── src/
 │   ├── components/
 │   │   ├── common/
+│   │   │   ├── Badge.tsx
+│   │   │   ├── Button.tsx
+│   │   │   ├── Card.tsx
+│   │   │   ├── Checkbox.tsx
+│   │   │   ├── Input.tsx
+│   │   │   ├── Select.tsx
+│   │   │   ├── Textarea.tsx
+│   │   │   └── index.ts
 │   │   ├── layout/
+│   │   │   ├── Header.tsx
+│   │   │   ├── Sidebar.tsx
+│   │   │   └── index.ts
 │   │   ├── operations/
+│   │   │   ├── MemberProfileSidebar.tsx
+│   │   │   ├── MembershipPlanSidebar.tsx
+│   │   │   ├── ProductEditSidebar.tsx
+│   │   │   ├── SidebarContainer.tsx
+│   │   │   ├── WorkOrderEditSidebar.tsx
+│   │   │   └── index.ts
 │   │   └── product/
+│   │       └── index.ts
 │   ├── features/
 │   │   └── dashboard/
+│   │       ├── Dashboard.tsx
+│   │       └── index.ts
 │   ├── hooks/
+│   │   ├── useFetch.ts
+│   │   ├── useForm.ts
+│   │   └── index.ts
 │   ├── styles/
 │   │   └── globals.css
 │   ├── types/
+│   │   └── index.ts
 │   └── utils/
-├── public/
+│       ├── helpers.ts
+│       └── index.ts
+├── AUDIT_REPORT.md
+├── PLANNING.md
+├── README.md
 ├── next.config.js
-├── tailwind.config.js
 ├── postcss.config.js
-├── tsconfig.json
-└── README.md
+├── tailwind.config.js
+└── tsconfig.json
 ```
 
 ---
@@ -169,3 +199,51 @@ Se priorizó la calidad del código y la accesibilidad desde el diseño inicial 
 
 4. **Alineación documental**
    - README actualizado y coherente con el alcance funcional actual del proyecto.
+
+---
+
+## Bitácora de refinamientos UI (iterativo)
+
+### Navegación y flujo principal
+
+- Eliminación del botón/flujo de **Inicio** en navegación lateral para forzar un flujo operativo directo.
+- Dashboard ajustado para iniciar por defecto en el flujo de incidencias (`flow=incident`).
+- Limpieza de estado no utilizado en el dashboard para reducir complejidad y mejorar mantenibilidad.
+
+### Sistema visual y branding
+
+- Migración progresiva de estilos a una línea visual unificada (grises neutros + acento rosado/morado).
+- Normalización de tarjetas contenedoras en operación con fondos y bordes consistentes.
+- Ajustes finos de densidad visual (padding y spacing) para lectura en viewport móvil.
+
+### Sidebar de incidencias (`ProductEditSidebar`)
+
+- Compactación de secciones críticas (`Descripción`, `Responsable`, `Comentarios`) con menor padding interno.
+- Badges de estado/SLA convertidos a estilo pill (`rounded-full`) para reforzar legibilidad.
+- Iteración de acciones inferiores: distribución en línea, ajuste de ancho, y adaptación responsive sin salto de línea en etiquetas.
+- Afinado de textos y botones para mantener una sola línea en móvil cuando aplica.
+
+### Contenedor operativo (`SidebarContainer`)
+
+- Ajuste de colores de tarjetas de contexto (Sala/Planta/QR) para contraste suave y consistencia.
+- Eliminación de bordes innecesarios en listados para reducir ruido visual.
+- Reorganización de acciones inferiores con comportamiento responsivo y mejor jerarquía visual.
+
+### Orden de trabajo (`WorkOrderEditSidebar`)
+
+- Reordenación completa de bloques en el orden funcional esperado:
+   1) Información básica
+   2) Historial de cambios
+   3) Materiales usados
+   4) Tiempo de ejecución
+   5) Medios
+   6) Firma del técnico
+- Incorporación de secciones faltantes (`Materiales usados`, `Tiempo de ejecución`, `Medios`) y sincronización visual con el resto del sistema.
+- Historial de cambios con resultado compacto y acciones `...` a la derecha, conservando checkboxes y contenido.
+- Reducción de márgenes internos en cards y secciones para una composición más compacta en móvil.
+
+### Resultado técnico
+
+- Refactor incremental sin ruptura de contratos públicos de componentes.
+- Cambios validados de manera continua con chequeo de errores en archivos modificados.
+- Base visual y estructural lista para nuevas iteraciones sin deuda de UI acumulada.

@@ -18,7 +18,7 @@ export const Card: React.FC<CardProps> = ({
   return (
     <div
       className={`
-        bg-brand-white rounded-xl p-5 border border-brand-border shadow-sm
+        bg-brand rounded-xl p-5 border border-brand-border shadow-sm
         ${interactiveClasses}
         ${className}
       `}

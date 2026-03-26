@@ -1,15 +1,18 @@
-'use client'
+"use client";
 
-import React from 'react'
-import { AlertTriangle, ChevronDown, Plus, X } from 'lucide-react'
-import { Badge, Button, Card } from '@/src/components/common'
+import React from "react";
+import { AlertTriangle, ChevronDown, Plus, X } from "lucide-react";
+import { Badge, Button, Card } from "@/src/components/common";
 
 interface SidebarContainerProps {
   onClose?: () => void;
   onCreateIncident?: () => void;
 }
 
-export const SidebarContainer: React.FC<SidebarContainerProps> = ({ onClose, onCreateIncident }) => {
+export const SidebarContainer: React.FC<SidebarContainerProps> = ({
+  onClose,
+  onCreateIncident,
+}) => {
   return (
     <div className="w-full max-w-[1200px] rounded-2xl bg-[#A5A5A5] border border-brand-border p-6 space-y-4">
       <div className="flex items-start justify-between">
@@ -25,24 +28,28 @@ export const SidebarContainer: React.FC<SidebarContainerProps> = ({ onClose, onC
         </button>
       </div>
 
-      <Card className="space-y-3 bg-[#EDEDED] border border-brand-border shadow-none">
+      <Card className="space-y-2 bg-[#EDEDED] border border-brand-border shadow-none">
         <p className="text-label-16 text-brand-text">Sala Fitness</p>
-        <div className="rounded-xl bg-[#FCFCFC] border border-brand-soft p-4 space-y-3">
-          <div className="grid grid-cols-2 gap-3">
+        <div className="rounded-2xl bg-[#FBFBFB] border border-brand-soft p-1 space-y-2">
+          <div className="grid grid-cols-2 gap-2">
             <div>
               <p className="text-label-14 text-brand-textStrong">Planta</p>
             </div>
             <div className="text-right">
-              <p className="text-[16px] leading-6 font-normal text-brand-text">1</p>
+              <p className="text-[16px] leading-6 font-normal text-brand-text">
+                1
+              </p>
             </div>
           </div>
           <div className="h-px bg-brand-soft" />
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-2 gap-2">
             <div>
               <p className="text-label-14 text-brand-textStrong">QR</p>
             </div>
             <div className="text-right">
-              <p className="text-[16px] leading-6 font-normal text-brand-text">S-001</p>
+              <p className="text-[16px] leading-6 font-normal text-brand-text">
+                S-001
+              </p>
             </div>
           </div>
           <div className="h-px bg-brand-soft" />
@@ -53,18 +60,23 @@ export const SidebarContainer: React.FC<SidebarContainerProps> = ({ onClose, onC
         </div>
       </Card>
 
-      <Card className="p-0 overflow-hidden rounded-xl bg-[#EDEDED] border border-brand-border shadow-none">
-        <div className="px-5 py-3.5 bg-[#EDEDED] flex items-center justify-between">
-          <h3 className="text-label-16 text-brand-text">Listado de ítems en la sala</h3>
+      <Card className="p-2 overflow-hidden rounded-xl bg-[#EDEDED] border-0 shadow-none">
+        <div className="px-2 bg-[#EDEDED] flex items-center justify-between">
+          <h3 className="text-label-16 text-brand-text">
+            Listado de ítems en la sala
+          </h3>
           <div className="flex items-center gap-2 text-brand-text">
-            <button type="button" className="w-8 h-8 rounded-full border border-dashed border-brand-text/60 flex items-center justify-center">
+            <button
+              type="button"
+              className="w-8 h-8 rounded-full border border-dashed border-brand-text/60 flex items-center justify-center"
+            >
               <Plus size={14} />
             </button>
             <ChevronDown size={14} className="text-brand-text" />
           </div>
         </div>
 
-        <div className="p-5 pt-4 bg-[#EDEDED]">
+        <div className="p-1 pt-6 bg-[#EDEDED]">
           <div className="rounded-xl border border-brand-soft bg-[#FCFCFC] overflow-hidden">
             <div className="grid grid-cols-[1fr_1fr_80px_90px] gap-2 px-4 py-3 text-label-14 text-brand-textStrong">
               <span>Ítem</span>
@@ -76,31 +88,44 @@ export const SidebarContainer: React.FC<SidebarContainerProps> = ({ onClose, onC
             <div className="grid grid-cols-[1fr_1fr_80px_90px] gap-2 px-4 py-3 text-[16px] leading-6 font-normal text-brand-text">
               <span>Cinta 03</span>
               <span className="truncate">Fitness Machines</span>
-              <span><Badge variant="danger">Falla</Badge></span>
+              <span>
+                <Badge variant="danger">Falla</Badge>
+              </span>
               <span>12/09/2025</span>
             </div>
             <div className="h-px bg-brand-soft" />
             <div className="grid grid-cols-[1fr_1fr_80px_90px] gap-2 px-4 py-3 text-[16px] leading-6 font-normal text-brand-text">
               <span>Aire 02</span>
               <span className="truncate">HVAC</span>
-              <span><Badge variant="success">OK</Badge></span>
+              <span>
+                <Badge variant="success">OK</Badge>
+              </span>
               <span>12/09/2025</span>
             </div>
           </div>
         </div>
       </Card>
 
-      <div className="rounded-xl border border-brand-border bg-[#EDEDED] p-3">
-        <div className="grid grid-cols-2 gap-2">
-          <Button variant="neutral" size="lg" className="w-full bg-[#FFFFFF] hover:bg-[#FFFFFF] text-brand-text text-[16px] leading-6 font-semibold border-brand-border">
+      <div className="rounded-xl border border-brand-border bg-[#EDEDED] p-2 sm:pl-6 md:pl-12 lg:pl-20">
+        <div className="flex flex-wrap justify-end gap-2">
+          <Button
+            variant="neutral"
+            size="sm"
+            className="min-w-[112px] sm:min-w-[130px] py-2.5 sm:py-3 bg-[#FFFFFF] hover:bg-[#FFFFFF] text-brand-text border-brand-border"
+          >
             <Plus size={14} />
             Añadir ítem
           </Button>
-          <Button variant="primary" size="lg" className="w-full" onClick={onCreateIncident}>
+          <Button
+            variant="primary"
+            size="sm"
+            className="min-w-[122px] sm:min-w-[140px] py-2.5 sm:py-3"
+            onClick={onCreateIncident}
+          >
             Crear incidencia
           </Button>
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
